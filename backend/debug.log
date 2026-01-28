@@ -1,0 +1,42 @@
+[2026-01-25T01:28:11.167Z] [PROCESS] Starting doc 17: Oware%20kojo%20Afatsiawu%20cv.pdf
+[2026-01-25T01:28:11.196Z] [PROCESS] Step 1: Extracting text from uploads\1769304490778.pdf...
+[2026-01-25T01:28:13.063Z] [PROCESS] Text extraction successful. Length: 3068 chars.
+[2026-01-25T01:28:13.074Z] [PROCESS] Step 2: Generating AI insights with Groq...
+[2026-01-25T01:28:16.324Z] ERROR: [PROCESS ERROR] Critical failure for doc 17
+Stack: Error: AI generation failed: 400 Failed to generate JSON. Please adjust your prompt. See 'failed_generation' for more details.
+    at generateComprehensiveInsights (C:\Users\Oware\Desktop\Brainlyx\backend\src\services\aiService.js:257:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Users\Oware\Desktop\Brainlyx\backend\src\routes\documents.js:57:34
+[2026-01-25T01:28:16.425Z] [PROCESS] Document 17 marked as FAILED in DB.
+[2026-01-25T01:29:35.589Z] [PROCESS] Starting doc 18: Oware%20kojo%20Afatsiawu%20cv.pdf
+[2026-01-25T01:29:35.596Z] [PROCESS] Step 1: Extracting text from uploads\1769304575466.pdf...
+[2026-01-25T01:29:36.320Z] [PROCESS] Text extraction successful. Length: 3068 chars.
+[2026-01-25T01:29:36.331Z] [PROCESS] Step 2: Generating AI insights with Groq...
+[2026-01-25T01:29:38.758Z] ERROR: [PROCESS ERROR] Critical failure for doc 18
+Stack: Error: AI generation failed: 400 Failed to generate JSON. Please adjust your prompt. See 'failed_generation' for more details.
+    at generateComprehensiveInsights (C:\Users\Oware\Desktop\Brainlyx\backend\src\services\aiService.js:257:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Users\Oware\Desktop\Brainlyx\backend\src\routes\documents.js:57:34
+[2026-01-25T01:29:38.853Z] [PROCESS] Document 18 marked as FAILED in DB.
+[2026-01-25T01:32:27.774Z] [PROCESS] Starting doc 19: Oware%20kojo%20Afatsiawu%20cv.pdf
+[2026-01-25T01:32:27.789Z] [PROCESS] Step 1: Extracting text from uploads\1769304747571.pdf...
+[2026-01-25T01:32:28.505Z] [PROCESS] Text extraction successful. Length: 3068 chars.
+[2026-01-25T01:32:28.512Z] [PROCESS] Step 2: Generating AI insights with Groq...
+[2026-01-25T01:32:31.183Z] ERROR: [PROCESS ERROR] Critical failure for doc 19
+Stack: Error: AI generation failed: 400 Failed to generate JSON. Please adjust your prompt. See 'failed_generation' for more details.
+    at generateComprehensiveInsights (C:\Users\Oware\Desktop\Brainlyx\backend\src\services\aiService.js:257:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async C:\Users\Oware\Desktop\Brainlyx\backend\src\routes\documents.js:57:34
+[2026-01-25T01:32:31.271Z] [PROCESS] Document 19 marked as FAILED in DB.
+[2026-01-25T01:38:38.267Z] [PROCESS] Starting doc 20: Oware%20kojo%20Afatsiawu%20cv.pdf
+[2026-01-25T01:38:38.307Z] [PROCESS] Step 1: Extracting text from uploads\1769305117397.pdf...
+[2026-01-25T01:38:40.505Z] [PROCESS] Text extraction successful. Length: 3068 chars.
+[2026-01-25T01:38:40.529Z] [PROCESS] Step 2: Generating AI insights with Groq...
+[2026-01-25T01:38:50.170Z] [PROCESS] AI generation successful.
+[2026-01-25T01:38:50.334Z] [PROCESS] Document 20 database update confirmed. STATUS: COMPLETED
+[2026-01-28T00:21:37.033Z] [PROCESS] Starting doc 21: David_Oware_Afatsiawu.pdf
+[2026-01-28T00:21:37.050Z] [PROCESS] Step 1: Extracting text from uploads\1769559696113.pdf...
+[2026-01-28T00:21:37.912Z] [PROCESS] Text extraction successful. Length: 100 chars.
+[2026-01-28T00:21:37.929Z] [PROCESS] Step 2: Generating AI insights with Groq...
+[2026-01-28T00:21:54.231Z] [PROCESS] AI generation successful.
+[2026-01-28T00:21:54.828Z] [PROCESS] Document 21 database update confirmed. STATUS: COMPLETED
