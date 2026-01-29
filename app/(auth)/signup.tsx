@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { Alert, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
 
-const logoImg = require('@/assets/images/logo.png');
+const logoImg = require('@/assets/images/icon.png');
 
 export default function Signup() {
     const [username, setUsername] = useState('');

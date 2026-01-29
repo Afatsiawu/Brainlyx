@@ -9,7 +9,7 @@ import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Alert, Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 
-const logoImg = require('@/assets/images/logo.png');
+const logoImg = require('@/assets/images/icon.png');
 const { width } = Dimensions.get('window');
 
 const categories = ['Objective', 'Essay', 'Case Study'];

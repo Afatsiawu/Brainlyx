@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { Alert, Dimensions, KeyboardAvoidingView, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
 
-const logoImg = require('@/assets/images/logo.png');
+const logoImg = require('@/assets/images/icon.png');
 
 const { width } = Dimensions.get('window');
 

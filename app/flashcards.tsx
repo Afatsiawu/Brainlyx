@@ -13,7 +13,7 @@ import Animated, {
     withSpring
 } from 'react-native-reanimated';
 
-const logoImg = require('@/assets/images/logo.png');
+const logoImg = require('@/assets/images/icon.png');
 
 import api from '@/services/api';
 import { useLocalSearchParams } from 'expo-router';
