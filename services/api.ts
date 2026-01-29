@@ -1,10 +1,7 @@
 import axios from 'axios';
 
-// Use local IP for real device testing, localhost for simulator
-// Machine IP: 172.20.10.2
-const YOUR_IP = '172.20.10.2';
-
-const BASE_URL = `http://${YOUR_IP}:3000/api/v1`;
+// Production backend hosted on Render
+const BASE_URL = 'https://brainlyx.onrender.com/api/v1';
 
 const api = axios.create({
     baseURL: BASE_URL,
