@@ -20,7 +20,7 @@ module.exports = new EntitySchema({
             default: 'pending',
         },
         uploadedAt: {
-            type: 'datetime',
+            type: 'timestamp',
             createDate: true,
         },
         flashcards: {
