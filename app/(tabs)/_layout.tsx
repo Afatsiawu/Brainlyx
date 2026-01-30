@@ -147,7 +147,7 @@ export default function TabLayout() {
 
             <View style={[styles.webviewWrapper, isMinimized && { height: 0, opacity: 0 }]}>
               <WebView
-                source={{ uri: `https://open.spotify.com/embed/playlist/${playingPlaylist.id}?utm_source=generator` }}
+                source={{ uri: `https://www.youtube.com/embed/${playingPlaylist.id}?autoplay=1&controls=1&modestbranding=1` }}
                 style={styles.webview}
                 allowsInlineMediaPlayback={true}
                 mediaPlaybackRequiresUserAction={false}

@@ -145,8 +145,8 @@ export default function MusicScreen() {
                                             <Text style={styles.trackCountText}>{playlist.tracks.total} tracks</Text>
                                         </View>
                                         <View style={styles.spotifyBadge}>
-                                            <Ionicons name="musical-notes" size={14} color="#1DB954" />
-                                            <Text style={styles.spotifyText}>Play In-App</Text>
+                                            <Ionicons name="play-circle" size={14} color="#FF0000" />
+                                            <Text style={styles.spotifyText}>Play Full Music</Text>
                                         </View>
                                     </View>
                                 </View>
@@ -272,7 +272,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         gap: 4,
-        backgroundColor: Colors.secondary + '15',
+        backgroundColor: '#FF0000' + '15',
         paddingHorizontal: 8,
         paddingVertical: 4,
         borderRadius: 8,
@@ -280,7 +280,7 @@ const styles = StyleSheet.create({
     spotifyText: {
         fontSize: 10,
         fontWeight: '700',
-        color: Colors.secondary,
+        color: '#FF0000',
     },
     playIconButton: {
         width: 48,
