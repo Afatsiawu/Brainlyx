@@ -1,3 +1,4 @@
+import { setAuthToken } from '@/services/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
@@ -35,6 +36,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             if (authDataSerialized) {
                 const authData = JSON.parse(authDataSerialized);
                 setUser(authData.user);
+                if (authData.token) {
+                    setAuthToken(authData.token);
+                }
             }
         } catch (error) {
             console.error('Error loading auth data:', error);
@@ -46,6 +50,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const login = async (userData: User, token: string) => {
         try {
             setUser(userData);
+            setAuthToken(token);
             await AsyncStorage.setItem('@AuthData', JSON.stringify({ user: userData, token }));
         } catch (error) {
             console.error('Error saving login data:', error);
@@ -55,6 +60,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const logout = async () => {
         try {
             setUser(null);
+            setAuthToken('');
             await AsyncStorage.removeItem('@AuthData');
         } catch (error) {
             console.error('Error during logout:', error);
