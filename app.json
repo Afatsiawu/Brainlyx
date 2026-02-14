@@ -12,7 +12,10 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.oware.brainlyx",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
+        "ITSAppUsesNonExemptEncryption": false,
+        "UIBackgroundModes": [
+          "audio"
+        ]
       }
     },
     "android": {
@@ -25,7 +28,12 @@
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.oware.brainlyx"
+      "package": "com.oware.brainlyx",
+      "permissions": [
+        "RECORD_AUDIO",
+        "FOREGROUND_SERVICE",
+        "FOREGROUND_SERVICE_MICROPHONE"
+      ]
     },
     "web": {
       "output": "static",
@@ -45,7 +53,13 @@
           }
         }
       ],
-      "expo-web-browser"
+      "expo-web-browser",
+      [
+        "expo-av",
+        {
+          "microphonePermission": "Allow Brainlyx to access your microphone to record lectures."
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,

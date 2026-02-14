@@ -67,40 +67,35 @@ const StatItem = ({ label, value, icon, color, delay, dynamicStyles }: any) => (
   </Animated.View>
 );
 
-const RecentItem = ({ item, index, colors, dynamicStyles, router }: any) => (
+const RecentItem = ({ item, index, colors, dynamicStyles, onPress }: any) => (
   <Animated.View entering={FadeInDown.delay(index * 100).springify()}>
     <TouchableOpacity
       style={dynamicStyles.recentItem}
-      onPress={() => {
-        if (item.status === 'completed') {
-          router.push({ pathname: '/flashcards', params: { documentId: item.id } });
-        } else if (item.status === 'failed') {
-          Alert.alert('Analysis Failed', 'AI could not process this document. Please try again with a different file.');
-        } else {
-          Alert.alert('Processing', 'This document is still being analyzed by AI.');
-        }
-      }}
+      onPress={() => onPress(item)}
     >
       <View style={[
         dynamicStyles.recentIcon,
         {
           backgroundColor:
-            item.status === 'completed' ? colors.primaryLight :
-              item.status === 'failed' ? colors.error + '20' :
-                colors.border
+            item.type === 'audio' ? colors.secondary + '20' :
+              item.status === 'completed' ? colors.primaryLight :
+                item.status === 'failed' ? colors.error + '20' :
+                  colors.border
         }
       ]}>
         <Ionicons
           name={
-            item.status === 'completed' ? "checkmark-circle" :
-              item.status === 'failed' ? "alert-circle" :
-                "hourglass"
+            item.type === 'audio' ? "mic" :
+              item.status === 'completed' ? "checkmark-circle" :
+                item.status === 'failed' ? "alert-circle" :
+                  "hourglass"
           }
           size={24}
           color={
-            item.status === 'completed' ? colors.primary :
-              item.status === 'failed' ? colors.error :
-                colors.textSecondary
+            item.type === 'audio' ? colors.secondary :
+              item.status === 'completed' ? colors.primary :
+                item.status === 'failed' ? colors.error :
+                  colors.textSecondary
           }
         />
       </View>
@@ -110,9 +105,10 @@ const RecentItem = ({ item, index, colors, dynamicStyles, router }: any) => (
         </Text>
         <Text style={dynamicStyles.recentSubtitle}>
           {new Date(item.uploadedAt).toLocaleDateString()} • {
-            item.status === 'completed' ? 'Ready to study' :
-              item.status === 'failed' ? 'Analysis failed' :
-                'AI Processing...'
+            item.type === 'audio' ? 'Audio Recording' :
+              item.status === 'completed' ? 'Ready to study' :
+                item.status === 'failed' ? 'Analysis failed' :
+                  'AI Processing...'
           }
         </Text>
       </View>
@@ -158,6 +154,44 @@ export default function DashboardScreen() {
   const [sessions, setSessions] = useState<any[]>([]);
   const [currentSessionId, setCurrentSessionId] = useState<number | null>(null);
   const [isTyping, setIsTyping] = useState(false);
+  // Audio Options Modal State
+  const [selectedAudio, setSelectedAudio] = useState<any>(null);
+  const [isAudioOptionsVisible, setIsAudioOptionsVisible] = useState(false);
+
+  const handleRecentPress = (item: any) => {
+    if (item.type === 'audio') {
+      setSelectedAudio(item);
+      setIsAudioOptionsVisible(true);
+    } else if (item.status === 'completed') {
+      router.push({ pathname: '/flashcards', params: { documentId: item.id } });
+    } else if (item.status === 'failed') {
+      Alert.alert('Analysis Failed', 'AI could not process this document. Please try again with a different file.');
+    } else {
+      Alert.alert('Processing', 'This document is still being analyzed by AI.');
+    }
+  };
+
+  const handleAudioOption = (option: 'listen' | 'notes' | 'flashcards' | 'quiz') => {
+    setIsAudioOptionsVisible(false);
+    if (!selectedAudio) return;
+
+    switch (option) {
+      case 'listen':
+        // Navigate to player (placeholder for now)
+        Alert.alert('Coming Soon', 'Audio player is under construction.');
+        break;
+      case 'notes':
+        Alert.alert('Generate Notes', 'Converting audio to notes...');
+        break;
+      case 'flashcards':
+        Alert.alert('Generate Flashcards', 'Converting audio to flashcards...');
+        break;
+      case 'quiz':
+        Alert.alert('Generate Quiz', 'Converting audio to quiz...');
+        break;
+    }
+  };
+
   const chatListRef = React.useRef<FlatList>(null);
 
   const fetchSessions = async () => {
@@ -501,6 +535,7 @@ export default function DashboardScreen() {
                 colors={colors}
                 dynamicStyles={dynamicStyles}
                 router={router}
+                onPress={handleRecentPress}
               />
             )
           )}
@@ -525,6 +560,53 @@ export default function DashboardScreen() {
           <Ionicons name="sparkles" size={10} color="white" />
         </View>
       </TouchableOpacity>
+
+      {/* Audio Options Modal */}
+      <Modal
+        visible={isAudioOptionsVisible}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setIsAudioOptionsVisible(false)}
+      >
+        <View style={dynamicStyles.modalOverlay}>
+          <View style={dynamicStyles.modalContent}>
+            <View style={dynamicStyles.modalHeader}>
+              <Text style={dynamicStyles.modalTitle} numberOfLines={1}>{selectedAudio?.filename || 'Audio Options'}</Text>
+              <TouchableOpacity onPress={() => setIsAudioOptionsVisible(false)}>
+                <Ionicons name="close-circle" size={28} color={colors.textSecondary} />
+              </TouchableOpacity>
+            </View>
+
+            <TouchableOpacity style={dynamicStyles.modalOption} onPress={() => handleAudioOption('listen')}>
+              <View style={[dynamicStyles.modalOptionIcon, { backgroundColor: colors.primary + '20' }]}>
+                <Ionicons name="play-circle" size={28} color={colors.primary} />
+              </View>
+              <Text style={dynamicStyles.modalOptionText}>Listen to Recording</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={dynamicStyles.modalOption} onPress={() => handleAudioOption('notes')}>
+              <View style={[dynamicStyles.modalOptionIcon, { backgroundColor: colors.secondary + '20' }]}>
+                <Ionicons name="document-text" size={28} color={colors.secondary} />
+              </View>
+              <Text style={dynamicStyles.modalOptionText}>Generate Notes</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={dynamicStyles.modalOption} onPress={() => handleAudioOption('flashcards')}>
+              <View style={[dynamicStyles.modalOptionIcon, { backgroundColor: '#10B98120' }]}>
+                <Ionicons name="albums" size={28} color="#10B981" />
+              </View>
+              <Text style={dynamicStyles.modalOptionText}>Generate Flashcards</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={dynamicStyles.modalOption} onPress={() => handleAudioOption('quiz')}>
+              <View style={[dynamicStyles.modalOptionIcon, { backgroundColor: '#F59E0B20' }]}>
+                <Ionicons name="help-circle" size={28} color="#F59E0B" />
+              </View>
+              <Text style={dynamicStyles.modalOptionText}>Generate Quiz</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
 
       <Modal
         visible={isChatVisible}

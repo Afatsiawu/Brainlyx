@@ -97,13 +97,13 @@ export default function MusicScreen() {
             >
                 <View style={styles.header}>
                     <Animated.View entering={FadeInDown.duration(800)}>
-                        <Text style={styles.title}>Study Beats</Text>
-                        <Text style={styles.subtitle}>Play in-app to stay focused while studying.</Text>
+                        <Text style={styles.title}>Study Courses</Text>
+                        <Text style={styles.subtitle}>Watch visuals to stay focused while studying.</Text>
                     </Animated.View>
 
                     <Animated.View entering={FadeInDown.delay(200)} style={styles.searchContainer}>
                         <Input
-                            placeholder="Find a mood or genre..."
+                            placeholder="Find a course or topic..."
                             value={searchQuery}
                             onChangeText={setSearchQuery}
                             icon="search-outline"
@@ -141,12 +141,12 @@ export default function MusicScreen() {
                                     </Text>
                                     <View style={styles.playlistFooter}>
                                         <View style={styles.trackCount}>
-                                            <Ionicons name="musical-notes" size={14} color={Colors.textSecondary} />
-                                            <Text style={styles.trackCountText}>{playlist.tracks.total} tracks</Text>
+                                            <Ionicons name="videocam" size={14} color={Colors.textSecondary} />
+                                            <Text style={styles.trackCountText}>{playlist.tracks.total} videos</Text>
                                         </View>
                                         <View style={styles.spotifyBadge}>
-                                            <Ionicons name="play-circle" size={14} color="#FF0000" />
-                                            <Text style={styles.spotifyText}>Play Full Music</Text>
+                                            <Ionicons name="logo-youtube" size={14} color="#FF0000" />
+                                            <Text style={styles.spotifyText}>Watch Video</Text>
                                         </View>
                                     </View>
                                 </View>

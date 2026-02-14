@@ -31,5 +31,14 @@ module.exports = new EntitySchema({
             type: 'text',
             nullable: true,
         },
+        type: {
+            type: 'varchar', // 'pdf' or 'audio'
+            default: 'pdf',
+            nullable: true,
+        },
+        metadata: {
+            type: 'text', // JSON string for duration, original filename, etc.
+            nullable: true,
+        },
     },
 });

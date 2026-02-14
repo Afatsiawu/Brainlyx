@@ -26,54 +26,63 @@ router.post('/upload', upload.single('file'), async (req, res) => {
             return res.status(400).json({ error: 'No file uploaded' });
         }
 
+        const isAudio = req.file.mimetype.startsWith('audio/');
         const documentRepository = AppDataSource.getRepository(Document);
+
         const doc = documentRepository.create({
             filename: req.file.originalname,
             path: req.file.path,
-            status: 'processing',
+            status: isAudio ? 'completed' : 'processing', // Audio is instantly available for listening
+            type: isAudio ? 'audio' : 'pdf',
+            metadata: isAudio ? JSON.stringify({
+                mimeType: req.file.mimetype,
+                size: req.file.size
+            }) : null
         });
 
         await documentRepository.save(doc);
 
-        // Background Processing: Extract Text -> AI Generation
-        (async () => {
-            try {
-                log(`[PROCESS] Starting doc ${doc.id}: ${doc.filename}`);
+        if (!isAudio) {
+            // Background Processing for PDFs: Extract Text -> AI Generation
+            (async () => {
+                try {
+                    log(`[PROCESS] Starting doc ${doc.id}: ${doc.filename}`);
 
-                log(`[PROCESS] Step 1: Extracting text from ${doc.path}...`);
-                const text = await promiseWithTimeout(
-                    extractText(doc.path), 
-                    60000, 
-                    'Text extraction from PDF timed out (max 1 min)'
-                );
-                
-                if (!text || text.trim().length < 50) {
-                    throw new Error('Extracted text is too short or empty. Ensure the document is not an image-only PDF.');
+                    log(`[PROCESS] Step 1: Extracting text from ${doc.path}...`);
+                    const text = await promiseWithTimeout(
+                        extractText(doc.path),
+                        60000,
+                        'Text extraction from PDF timed out (max 1 min)'
+                    );
+
+                    if (!text || text.trim().length < 50) {
+                        throw new Error('Extracted text is too short or empty. Ensure the document is not an image-only PDF.');
+                    }
+
+                    log(`[PROCESS] Text extraction successful. Length: ${text.length} chars.`);
+
+                    log(`[PROCESS] Step 2: Generating AI insights with Groq...`);
+                    const insights = await promiseWithTimeout(
+                        generateComprehensiveInsights(text),
+                        120000,
+                        'AI insight generation timed out (max 2 mins)'
+                    );
+                    log(`[PROCESS] AI generation successful.`);
+
+                    doc.flashcards = JSON.stringify(insights.flashcards);
+                    doc.questions = JSON.stringify(insights.questions);
+                    doc.status = 'completed';
+
+                    await documentRepository.save(doc);
+                    log(`[PROCESS] Document ${doc.id} database update confirmed. STATUS: COMPLETED`);
+                } catch (err) {
+                    logError(`[PROCESS ERROR] Critical failure for doc ${doc.id}`, err);
+                    doc.status = 'failed';
+                    await documentRepository.save(doc);
+                    log(`[PROCESS] Document ${doc.id} marked as FAILED in DB.`);
                 }
-                
-                log(`[PROCESS] Text extraction successful. Length: ${text.length} chars.`);
-
-                log(`[PROCESS] Step 2: Generating AI insights with Groq...`);
-                const insights = await promiseWithTimeout(
-                    generateComprehensiveInsights(text),
-                    120000,
-                    'AI insight generation timed out (max 2 mins)'
-                );
-                log(`[PROCESS] AI generation successful.`);
-
-                doc.flashcards = JSON.stringify(insights.flashcards);
-                doc.questions = JSON.stringify(insights.questions);
-                doc.status = 'completed';
-
-                await documentRepository.save(doc);
-                log(`[PROCESS] Document ${doc.id} database update confirmed. STATUS: COMPLETED`);
-            } catch (err) {
-                logError(`[PROCESS ERROR] Critical failure for doc ${doc.id}`, err);
-                doc.status = 'failed';
-                await documentRepository.save(doc);
-                log(`[PROCESS] Document ${doc.id} marked as FAILED in DB.`);
-            }
-        })();
+            })();
+        }
 
         res.status(201).json({ message: 'File uploaded successfully', document: doc });
     } catch (error) {

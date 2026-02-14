@@ -4,6 +4,7 @@ import { Colors, Shadows, Spacing, Typography } from '@/constants/theme';
 import api from '@/services/api';
 import { Ionicons } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
+import { useKeepAwake } from 'expo-keep-awake';
 import { useRouter } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Alert, Dimensions, Modal, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -25,6 +26,9 @@ const { width } = Dimensions.get('window');
 export default function RecordLectureScreen() {
     const [recording, setRecording] = useState<Audio.Recording | null>(null);
     const [isRecording, setIsRecording] = useState(false);
+
+    useKeepAwake(); // Keep the screen awake while this screen is active (or conditionally when isRecording is true)
+
     const [duration, setDuration] = useState(0);
     const [transcribing, setTranscribing] = useState(false);
 
@@ -91,6 +95,9 @@ export default function RecordLectureScreen() {
             await Audio.setAudioModeAsync({
                 allowsRecordingIOS: true,
                 playsInSilentModeIOS: true,
+                staysActiveInBackground: true,
+                shouldDuckAndroid: true,
+                playThroughEarpieceAndroid: false,
             });
 
             const { recording } = await Audio.Recording.createAsync(
@@ -141,27 +148,27 @@ export default function RecordLectureScreen() {
                 formData.append('topic', topic.trim());
             }
 
-            const response = await api.post('/study/transcribe-and-generate', formData, {
+            const response = await api.post('/documents/upload', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
-                timeout: 60000, // Increased timeout for generation
+                timeout: 30000,
             });
 
             setTranscribing(false);
             setTopic(''); // Reset topic
 
             Alert.alert(
-                'Success!',
-                'Lecture transcribed. AI has generated notes and flashcards based on your topic.',
+                'Saved!',
+                'Recording saved to your Recent files. Tap it there to listen or generate study materials.',
                 [
-                    { text: 'Study Now', onPress: () => router.push('/(tabs)/study') }
+                    { text: 'Go to Dashboard', onPress: () => router.push('/(tabs)/') }
                 ]
             );
         } catch (error: any) {
-            console.error('Transcription failed:', error);
+            console.error('Upload failed:', error);
             setTranscribing(false);
-            Alert.alert('Error', 'AI failed to process the audio. Check your connection.');
+            Alert.alert('Error', 'Failed to save recording. Check your connection.');
         }
     };
 

@@ -103,7 +103,15 @@ export default function TabLayout() {
         <Tabs.Screen name="upload" options={{ title: 'Upload' }} />
         <Tabs.Screen name="study" options={{ title: 'Study' }} />
         <Tabs.Screen name="index" options={{ title: 'Home' }} />
-        <Tabs.Screen name="music" options={{ title: 'Music' }} />
+        <Tabs.Screen
+          name="youtube"
+          options={{
+            title: 'YouTube',
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name="play-circle" size={size} color={color} />
+            ),
+          }}
+        />
         <Tabs.Screen name="profile" options={{ title: 'Profile' }} />
       </Tabs>
 
@@ -147,11 +155,38 @@ export default function TabLayout() {
 
             <View style={[styles.webviewWrapper, isMinimized && { height: 0, opacity: 0 }]}>
               <WebView
-                source={{ uri: `https://www.youtube.com/embed/${playingPlaylist.id}?autoplay=1&controls=1&modestbranding=1` }}
+                source={{
+                  html: `
+                    <!DOCTYPE html>
+                    <html>
+                      <head>
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+                        <style>
+                          body { margin: 0; padding: 0; background-color: black; overflow: hidden; display: flex; justify-content: center; align-items: center; height: 100vh; }
+                          iframe { width: 100%; height: 100%; border: none; }
+                        </style>
+                      </head>
+                      <body>
+                        <iframe 
+                          src="https://www.youtube.com/embed/${playingPlaylist.id}?autoplay=1&controls=1&modestbranding=1&rel=0&playsinline=1"
+                          frameborder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                          referrerpolicy="strict-origin-when-cross-origin" 
+                          allowfullscreen
+                        ></iframe>
+                      </body>
+                    </html>
+                  `,
+                  baseUrl: "https://www.youtube.com"
+                }}
                 style={styles.webview}
                 allowsInlineMediaPlayback={true}
+                allowsFullscreenVideo={true}
                 mediaPlaybackRequiresUserAction={false}
                 startInLoadingState={true}
+                javaScriptEnabled={true}
+                domStorageEnabled={true}
+                originWhitelist={['*']}
                 renderLoading={() => (
                   <View style={styles.webviewLoading}>
                     <ActivityIndicator size="large" color={COLORS.active} />
