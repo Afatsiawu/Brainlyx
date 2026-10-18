@@ -44,7 +44,7 @@ export default function StudyScreen() {
             await api.delete(`/documents/${id}`);
             setDocuments(prev => prev.filter(d => d.id !== id));
             Alert.alert('Deleted', 'Document removed successfully.');
-        } catch (error) {
+        } catch {
             Alert.alert('Error', 'Failed to delete document.');
         }
     };

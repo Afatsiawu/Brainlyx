@@ -4,11 +4,9 @@ import { useMusic } from '@/context/MusicContext';
 import api from '@/services/api';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import {
     ActivityIndicator,
-    Dimensions,
     Image,
     RefreshControl,
     ScrollView,
@@ -18,8 +16,6 @@ import {
     View
 } from 'react-native';
 import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
-
-const { width } = Dimensions.get('window');
 
 interface Playlist {
     id: string;
@@ -36,7 +32,6 @@ export default function MusicScreen() {
     const [refreshing, setRefreshing] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const { playPlaylist } = useMusic();
-    const router = useRouter();
 
     const fetchPlaylists = async (query?: string) => {
         try {
@@ -160,7 +155,7 @@ export default function MusicScreen() {
                     {playlists.length === 0 && !loading && (
                         <View style={styles.emptyContainer}>
                             <Ionicons name="search-outline" size={64} color={Colors.border} />
-                            <Text style={styles.emptyText}>No matches found for "{searchQuery}"</Text>
+                            <Text style={styles.emptyText}>No matches found for &ldquo;{searchQuery}&rdquo;</Text>
                         </View>
                     )}
                 </View>

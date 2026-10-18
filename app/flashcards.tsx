@@ -1,8 +1,9 @@
 import { Colors, Shadows, Spacing, Typography } from '@/constants/theme';
 import { Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
-import React, { useEffect, useState } from 'react';
-import { Alert, Dimensions, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import api from '@/services/api';
+import { useLocalSearchParams, useRouter } from 'expo-router';
+import React, { useCallback, useEffect, useState } from 'react';
+import { ActivityIndicator, Alert, Dimensions, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
 import Animated, {
     Extrapolate,
@@ -12,12 +13,6 @@ import Animated, {
     useSharedValue,
     withSpring
 } from 'react-native-reanimated';
-
-const logoImg = require('@/assets/images/icon.png');
-
-import api from '@/services/api';
-import { useLocalSearchParams } from 'expo-router';
-import { ActivityIndicator } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
 
@@ -32,18 +27,10 @@ export default function FlashcardsScreen() {
     const [loading, setLoading] = useState(!!documentId);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [flipped, setFlipped] = useState(false);
-    const [showTopicModal, setShowTopicModal] = useState(false);
     const [topic, setTopic] = useState('');
     const [generating, setGenerating] = useState(false);
 
-    useEffect(() => {
-        if (documentId) {
-            fetchDocumentCards();
-        }
-        // If no documentId, cards remain empty and we show topic generation UI
-    }, [documentId]);
-
-    const fetchDocumentCards = async () => {
+    const fetchDocumentCards = useCallback(async () => {
         try {
             const response = await api.get(`/documents/${documentId}`);
             if (response.data && response.data.flashcards) {
@@ -66,7 +53,14 @@ export default function FlashcardsScreen() {
         } finally {
             setLoading(false);
         }
-    };
+    }, [documentId]);
+
+    useEffect(() => {
+        if (documentId) {
+            fetchDocumentCards();
+        }
+        // If no documentId, cards remain empty and we show topic generation UI
+    }, [documentId, fetchDocumentCards]);
 
     const translateX = useSharedValue(0);
     const rotate = useSharedValue(0);
@@ -152,7 +146,6 @@ export default function FlashcardsScreen() {
         }
 
         setGenerating(true);
-        setShowTopicModal(false);
 
         try {
             // Generate flashcards

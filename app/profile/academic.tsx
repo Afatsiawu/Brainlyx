@@ -27,7 +27,7 @@ export default function AcademicScreen() {
         try {
             await updateUser({ university, major, year });
             Alert.alert('Success', 'Academic status updated');
-        } catch (error) {
+        } catch {
             Alert.alert('Error', 'Failed to update academic status');
         } finally {
             setLoading(false);

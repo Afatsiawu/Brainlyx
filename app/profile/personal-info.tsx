@@ -13,7 +13,7 @@ export default function PersonalInfoScreen() {
     const { user, updateUser } = useAuth();
 
     const [name, setName] = useState(user?.name || '');
-    const [email, setEmail] = useState(user?.email || '');
+    const [email] = useState(user?.email || '');
     const [loading, setLoading] = useState(false);
 
     const handleSave = async () => {
@@ -27,7 +27,7 @@ export default function PersonalInfoScreen() {
             // Simulated update (backend would usually be called here)
             await updateUser({ name });
             Alert.alert('Success', 'Profile updated successfully');
-        } catch (error) {
+        } catch {
             Alert.alert('Error', 'Failed to update profile');
         } finally {
             setLoading(false);

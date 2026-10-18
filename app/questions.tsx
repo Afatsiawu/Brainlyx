@@ -5,12 +5,9 @@ import { Colors, Shadows, Spacing, Typography } from '@/constants/theme';
 import api from '@/services/api';
 import { Ionicons } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, Alert, Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { ActivityIndicator, Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Animated, { FadeInDown } from 'react-native-reanimated';
-
-const logoImg = require('@/assets/images/icon.png');
-const { width } = Dimensions.get('window');
 
 const categories = ['Objective', 'Essay', 'Case Study'];
 
@@ -23,6 +20,46 @@ interface Question {
     hint?: string;
 }
 
+const parseQuestions = (data: any): Question[] => {
+    const newQuestions: Question[] = [];
+
+    if (data.objective && Array.isArray(data.objective)) {
+        data.objective.forEach((q: any, i: number) => {
+            newQuestions.push({
+                id: `obj-${Date.now()}-${i}`,
+                category: 'Objective',
+                question: q.question,
+                options: q.options,
+                answer: q.answer
+            });
+        });
+    }
+
+    if (data.essay && Array.isArray(data.essay)) {
+        data.essay.forEach((q: any, i: number) => {
+            newQuestions.push({
+                id: `essay-${Date.now()}-${i}`,
+                category: 'Essay',
+                question: q.question,
+                answer: q.answer
+            });
+        });
+    }
+
+    if (data.caseStudy && Array.isArray(data.caseStudy)) {
+        data.caseStudy.forEach((q: any, i: number) => {
+            newQuestions.push({
+                id: `case-${Date.now()}-${i}`,
+                category: 'Case Study',
+                question: `${q.scenario}\n\nQ: ${q.question}`,
+                answer: q.answer
+            });
+        });
+    }
+
+    return newQuestions;
+};
+
 export default function QuestionsScreen() {
     const router = useRouter();
     const [topic, setTopic] = useState('');
@@ -33,53 +70,7 @@ export default function QuestionsScreen() {
     const params = useLocalSearchParams();
     const documentId = params.documentId;
 
-    useEffect(() => {
-        if (documentId) {
-            fetchDocumentQuestions();
-        }
-    }, [documentId]);
-
-    const parseQuestions = (data: any) => {
-        const newQuestions: Question[] = [];
-
-        if (data.objective && Array.isArray(data.objective)) {
-            data.objective.forEach((q: any, i: number) => {
-                newQuestions.push({
-                    id: `obj-${Date.now()}-${i}`,
-                    category: 'Objective',
-                    question: q.question,
-                    options: q.options,
-                    answer: q.answer
-                });
-            });
-        }
-
-        if (data.essay && Array.isArray(data.essay)) {
-            data.essay.forEach((q: any, i: number) => {
-                newQuestions.push({
-                    id: `essay-${Date.now()}-${i}`,
-                    category: 'Essay',
-                    question: q.question,
-                    answer: q.answer
-                });
-            });
-        }
-
-        if (data.caseStudy && Array.isArray(data.caseStudy)) {
-            data.caseStudy.forEach((q: any, i: number) => {
-                newQuestions.push({
-                    id: `case-${Date.now()}-${i}`,
-                    category: 'Case Study',
-                    question: `${q.scenario}\n\nQ: ${q.question}`,
-                    answer: q.answer
-                });
-            });
-        }
-
-        return newQuestions;
-    };
-
-    const fetchDocumentQuestions = async () => {
+    const fetchDocumentQuestions = useCallback(async () => {
         setLoading(true);
         try {
             const response = await api.get(`/documents/${documentId}`);
@@ -102,7 +93,13 @@ export default function QuestionsScreen() {
         } finally {
             setLoading(false);
         }
-    };
+    }, [documentId]);
+
+    useEffect(() => {
+        if (documentId) {
+            fetchDocumentQuestions();
+        }
+    }, [documentId, fetchDocumentQuestions]);
 
     const handleGenerate = async () => {
         if (!topic.trim()) {
@@ -425,3 +422,4 @@ const styles = StyleSheet.create({
         fontSize: 12
     },
 });
+ 

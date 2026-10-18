@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/Button';
+import { AutoRotating3D, flipIn3D, Tilt3DCard } from '@/components/ui/ThreeD';
 import { Shadows, Spacing, Typography } from '@/constants/theme';
 import { useAuth } from '@/context/AuthContext';
 import { useTheme } from '@/context/ThemeContext';
@@ -7,10 +8,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFocusEffect, useRouter } from 'expo-router';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Alert, Dimensions, FlatList, KeyboardAvoidingView, Modal, Platform, RefreshControl, StatusBar as RNStatusBar, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, FlatList, KeyboardAvoidingView, Modal, Platform, RefreshControl, StatusBar as RNStatusBar, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Markdown from 'react-native-markdown-display';
 import Animated, {
-  FadeInDown,
   FadeInRight,
   FadeOutLeft,
   interpolate,
@@ -19,8 +19,6 @@ import Animated, {
   withRepeat,
   withTiming
 } from 'react-native-reanimated';
-
-const { width, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
 const MOTIVATIONAL_QUOTES = [
   { text: "The expert in anything was once a beginner.", author: "Helen Hayes" },
@@ -45,7 +43,7 @@ const MOTIVATIONAL_QUOTES = [
 const ChartBar = ({ height, label, active, delay, colors, dynamicStyles }: any) => (
   <View style={dynamicStyles.chartCol}>
     <Animated.View
-      entering={FadeInDown.delay(delay).springify()}
+      entering={flipIn3D(delay)}
       style={[
         dynamicStyles.chartBar,
         { height: height, backgroundColor: active ? colors.secondary : colors.border }
@@ -56,7 +54,7 @@ const ChartBar = ({ height, label, active, delay, colors, dynamicStyles }: any) 
 );
 
 const StatItem = ({ label, value, icon, color, delay, dynamicStyles }: any) => (
-  <Animated.View entering={FadeInDown.delay(delay)} style={dynamicStyles.statItem}>
+  <Animated.View entering={flipIn3D(delay)} style={dynamicStyles.statItem}>
     <View style={[dynamicStyles.statIconBadge, { backgroundColor: color + '15' }]}>
       <Ionicons name={icon} size={20} color={color} />
     </View>
@@ -68,7 +66,7 @@ const StatItem = ({ label, value, icon, color, delay, dynamicStyles }: any) => (
 );
 
 const RecentItem = ({ item, index, colors, dynamicStyles, onPress }: any) => (
-  <Animated.View entering={FadeInDown.delay(index * 100).springify()}>
+  <Animated.View entering={flipIn3D(index * 100)}>
     <TouchableOpacity
       style={dynamicStyles.recentItem}
       onPress={() => onPress(item)}
@@ -125,7 +123,6 @@ export default function DashboardScreen() {
   const router = useRouter();
   const [refreshing, setRefreshing] = useState(false);
   const [documents, setDocuments] = useState<any[]>([]);
-  const [allDocuments, setAllDocuments] = useState<any[]>([]);
 
   // Statistics State
   const [stats, setStats] = useState({
@@ -210,7 +207,7 @@ export default function DashboardScreen() {
       setChatHistory(response.data.messages || []);
       setCurrentSessionId(id);
       setIsHistoryVisible(false);
-    } catch (error) {
+    } catch {
       Alert.alert('Error', 'Failed to load chat history.');
     } finally {
       setIsTyping(false);
@@ -257,7 +254,6 @@ export default function DashboardScreen() {
     try {
       const response = await api.get('/documents');
       const docs = response.data;
-      setAllDocuments(docs);
 
       const sortedDocs = [...docs].sort((a: any, b: any) =>
         new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime()
@@ -356,7 +352,7 @@ export default function DashboardScreen() {
     bgAnim.value = withRepeat(withTiming(1, { duration: 5000 }), -1, true);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [bgAnim]);
 
   const animatedBgStyle = useAnimatedStyle(() => ({
     transform: [
@@ -399,10 +395,22 @@ export default function DashboardScreen() {
         </View>
 
         {/* Quote Card */}
-        <View style={dynamicStyles.quoteCard}>
+        <Tilt3DCard style={dynamicStyles.quoteCard}>
           <Animated.View style={[dynamicStyles.quoteDecoration, animatedBgStyle]}>
             <Ionicons name="school" size={140} color="white" />
           </Animated.View>
+
+          {/* 3D AI core */}
+          <AutoRotating3D size={64} duration={9000} tilt={16} style={dynamicStyles.quoteCore}>
+            <LinearGradient
+              colors={[colors.primary, colors.accent]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+              style={dynamicStyles.quoteCoreInner}
+            >
+              <Ionicons name="sparkles" size={26} color="white" />
+            </LinearGradient>
+          </AutoRotating3D>
 
           <View style={dynamicStyles.quoteContentWrapper}>
             <View style={dynamicStyles.quoteIconContainer}>
@@ -414,29 +422,33 @@ export default function DashboardScreen() {
               exiting={FadeOutLeft.duration(200)}
               style={dynamicStyles.quoteTextContainer}
             >
-              <Text style={dynamicStyles.quoteText}>"{currentQuote.text}"</Text>
+              <Text style={dynamicStyles.quoteText}>&ldquo;{currentQuote.text}&rdquo;</Text>
               <Text style={dynamicStyles.quoteAuthor}>— {currentQuote.author}</Text>
             </Animated.View>
           </View>
-        </View>
+        </Tilt3DCard>
 
         {/* Quick Actions */}
         <View style={dynamicStyles.actionsGrid}>
-          <TouchableOpacity
-            style={[dynamicStyles.actionCard, { backgroundColor: colors.primaryLight }]}
-            onPress={() => router.push('/(tabs)/upload')}
-          >
-            <Ionicons name="cloud-upload" size={32} color={colors.primary} />
-            <Text style={[dynamicStyles.actionText, { color: colors.primary }]}>Upload Document</Text>
-          </TouchableOpacity>
+          <Animated.View entering={flipIn3D(120)} style={dynamicStyles.actionCardWrapper}>
+            <TouchableOpacity
+              style={[dynamicStyles.actionCard, { backgroundColor: colors.primaryLight }]}
+              onPress={() => router.push('/(tabs)/upload')}
+            >
+              <Ionicons name="cloud-upload" size={32} color={colors.primary} />
+              <Text style={[dynamicStyles.actionText, { color: colors.primary }]}>Upload Document</Text>
+            </TouchableOpacity>
+          </Animated.View>
 
-          <TouchableOpacity
-            style={[dynamicStyles.actionCard, { backgroundColor: colors.surface, borderColor: colors.border, borderWidth: 1 }]}
-            onPress={() => router.push('/record-lecture')}
-          >
-            <Ionicons name="mic" size={32} color={colors.secondary} />
-            <Text style={[dynamicStyles.actionText, { color: colors.secondary }]}>Record Live Lecture</Text>
-          </TouchableOpacity>
+          <Animated.View entering={flipIn3D(200)} style={dynamicStyles.actionCardWrapper}>
+            <TouchableOpacity
+              style={[dynamicStyles.actionCard, { backgroundColor: colors.surface, borderColor: colors.border, borderWidth: 1 }]}
+              onPress={() => router.push('/record-lecture')}
+            >
+              <Ionicons name="mic" size={32} color={colors.secondary} />
+              <Text style={[dynamicStyles.actionText, { color: colors.secondary }]}>Record Live Lecture</Text>
+            </TouchableOpacity>
+          </Animated.View>
         </View>
 
         {/* Weekly Activity Section */}
@@ -704,8 +716,8 @@ export default function DashboardScreen() {
               ListHeaderComponent={
                 <View style={dynamicStyles.chatWelcome}>
                   <Ionicons name="school" size={64} color={colors.primary} />
-                  <Text style={dynamicStyles.chatWelcomeTitle}>Hello, I'm BrainlyxAI!</Text>
-                  <Text style={dynamicStyles.chatWelcomeSubtitle}>I'm here to help you understand your study topics better. Ask me anything!</Text>
+                  <Text style={dynamicStyles.chatWelcomeTitle}>Hello, I&apos;m BrainlyxAI!</Text>
+                  <Text style={dynamicStyles.chatWelcomeSubtitle}>I&apos;m here to help you understand your study topics better. Ask me anything!</Text>
                 </View>
               }
             />
@@ -875,6 +887,22 @@ const getStyles = (colors: any) => StyleSheet.create({
     bottom: -30,
     opacity: 0.15,
   },
+  quoteCore: {
+    position: 'absolute',
+    top: 14,
+    right: 14,
+    opacity: 0.95,
+  },
+  quoteCoreInner: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 32,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.35)',
+    backgroundColor: 'rgba(255,255,255,0.12)',
+  },
   quoteContentWrapper: {
     zIndex: 1,
   },
@@ -903,6 +931,9 @@ const getStyles = (colors: any) => StyleSheet.create({
     paddingHorizontal: Spacing.xl,
     gap: 16,
     marginBottom: 32,
+  },
+  actionCardWrapper: {
+    flex: 1,
   },
   actionCard: {
     flex: 1,
@@ -1087,6 +1118,50 @@ const getStyles = (colors: any) => StyleSheet.create({
     borderColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.45)',
+    justifyContent: 'center',
+    padding: Spacing.xl,
+  },
+  modalContent: {
+    backgroundColor: colors.surface,
+    borderRadius: 24,
+    padding: 20,
+    borderWidth: 1,
+    borderColor: colors.border,
+    ...Shadows.medium,
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 12,
+    marginBottom: 16,
+  },
+  modalTitle: {
+    ...Typography.h3,
+    color: colors.text,
+    flex: 1,
+  },
+  modalOption: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 14,
+    paddingVertical: 12,
+  },
+  modalOptionIcon: {
+    width: 48,
+    height: 48,
+    borderRadius: 14,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalOptionText: {
+    ...Typography.body,
+    fontWeight: '600',
+    color: colors.text,
   },
   chatContainer: {
     flex: 1,

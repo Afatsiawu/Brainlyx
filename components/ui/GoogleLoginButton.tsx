@@ -33,6 +33,9 @@ export const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({ onPressSta
             Alert.alert('Error', 'Google login failed');
             onPressEnd?.();
         }
+        // Fires once per OAuth response; re-running on handler identity
+        // changes could trigger duplicate logins.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [response]);
 
     const handleGoogleLogin = async (idToken: string) => {

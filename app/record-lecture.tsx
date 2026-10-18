@@ -7,7 +7,7 @@ import { Audio } from 'expo-av';
 import { useKeepAwake } from 'expo-keep-awake';
 import { useRouter } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, Alert, Dimensions, Modal, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Alert, Modal, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Animated, {
     Easing,
     FadeIn,
@@ -20,8 +20,6 @@ import Animated, {
     withRepeat,
     withTiming
 } from 'react-native-reanimated';
-
-const { width } = Dimensions.get('window');
 
 export default function RecordLectureScreen() {
     const [recording, setRecording] = useState<Audio.Recording | null>(null);
@@ -50,6 +48,10 @@ export default function RecordLectureScreen() {
             if (timerRef.current) clearInterval(timerRef.current);
             if (recording) stopRecording();
         };
+        // Unmount-only cleanup: deliberately not re-running when `recording`
+        // or `stopRecording` change, otherwise the recording would be stopped
+        // as soon as it starts.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const startRippleAnimation = () => {
@@ -148,7 +150,7 @@ export default function RecordLectureScreen() {
                 formData.append('topic', topic.trim());
             }
 
-            const response = await api.post('/documents/upload', formData, {
+            await api.post('/documents/upload', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -162,7 +164,7 @@ export default function RecordLectureScreen() {
                 'Saved!',
                 'Recording saved to your Recent files. Tap it there to listen or generate study materials.',
                 [
-                    { text: 'Go to Dashboard', onPress: () => router.push('/(tabs)/') }
+                    { text: 'Go to Dashboard', onPress: () => router.push('/(tabs)') }
                 ]
             );
         } catch (error: any) {

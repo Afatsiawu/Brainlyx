@@ -6,12 +6,10 @@ import { useAuth } from '@/context/AuthContext';
 import api, { setAuthToken } from '@/services/api';
 import { Link, useRouter } from 'expo-router';
 import { useState } from 'react';
-import { Alert, Dimensions, KeyboardAvoidingView, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, KeyboardAvoidingView, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
 
 const logoImg = require('@/assets/images/icon.png');
-
-const { width } = Dimensions.get('window');
 
 export default function Login() {
     const [username, setUsername] = useState('');
@@ -33,7 +31,7 @@ export default function Login() {
             setAuthToken(token);
             await login(user, token);
             router.replace('/(tabs)');
-        } catch (error) {
+        } catch {
             Alert.alert('Login Failed', 'Invalid credentials');
         } finally {
             setLoading(false);

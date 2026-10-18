@@ -7,7 +7,7 @@ import Animated, { SlideInUp } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { WebView } from 'react-native-webview';
 
-const { width, height } = Dimensions.get('window');
+const { height } = Dimensions.get('window');
 
 const COLORS = {
   active: '#8B5CF6',

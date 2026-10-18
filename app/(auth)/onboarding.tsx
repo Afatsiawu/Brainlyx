@@ -1,3 +1,4 @@
+import { AutoRotating3D, flipIn3D } from '@/components/ui/ThreeD';
 import { Colors, Spacing, Typography } from '@/constants/theme';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -24,7 +25,7 @@ interface OnboardingSlide {
     title: string;
     description: string;
     icon: keyof typeof Ionicons.glyphMap;
-    gradient: string[];
+    gradient: [string, string];
     accentColor: string;
 }
 
@@ -70,7 +71,7 @@ const FloatingParticle = ({ delay, duration }: { delay: number, duration: number
             -1,
             true
         );
-    }, []);
+    }, [duration, translateY, opacity]);
 
     const animatedStyle = useAnimatedStyle(() => ({
         transform: [{ translateY: translateY.value }],
@@ -105,11 +106,16 @@ const SlideItem = ({ item, index, scrollX }: { item: OnboardingSlide, index: num
         const rotate = interpolate(
             scrollX.value,
             [(index - 1) * width, index * width, (index + 1) * width],
-            [-10, 0, 10],
+            [-18, 0, 18],
             Extrapolate.CLAMP
         );
         return {
-            transform: [{ scale }, { translateY }, { rotate: `${rotate}deg` }],
+            transform: [
+                { perspective: 1000 },
+                { rotateY: `${rotate}deg` },
+                { scale },
+                { translateY },
+            ],
             opacity: interpolate(
                 scrollX.value,
                 [(index - 0.5) * width, index * width, (index + 0.5) * width],
@@ -123,11 +129,11 @@ const SlideItem = ({ item, index, scrollX }: { item: OnboardingSlide, index: num
         const rotate = interpolate(
             scrollX.value,
             [(index - 1) * width, index * width, (index + 1) * width],
-            [-20, 0, 20],
+            [-45, 0, 45],
             Extrapolate.CLAMP
         );
         return {
-            transform: [{ rotate: `${rotate}deg` }],
+            transform: [{ perspective: 600 }, { rotateY: `${rotate}deg` }],
         };
     });
 
@@ -163,7 +169,7 @@ const SlideItem = ({ item, index, scrollX }: { item: OnboardingSlide, index: num
             </Animated.View>
 
             {/* Feature Badges */}
-            <Animated.View entering={FadeInUp.delay(300)} style={styles.badgeContainer}>
+            <Animated.View entering={flipIn3D(300)} style={styles.badgeContainer}>
                 <View style={[styles.badge, { backgroundColor: item.accentColor + '20' }]}>
                     <Ionicons name="checkmark-circle" size={16} color={item.accentColor} />
                     <Text style={[styles.badgeText, { color: item.accentColor }]}>
@@ -173,6 +179,31 @@ const SlideItem = ({ item, index, scrollX }: { item: OnboardingSlide, index: num
             </Animated.View>
         </View>
     );
+};
+
+const PaginationDot = ({ index, accentColor, scrollX }: { index: number, accentColor: string, scrollX: SharedValue<number> }) => {
+    const dotStyle = useAnimatedStyle(() => {
+        const dotWidth = interpolate(
+            scrollX.value,
+            [(index - 1) * width, index * width, (index + 1) * width],
+            [8, 32, 8],
+            Extrapolate.CLAMP
+        );
+        const opacity = interpolate(
+            scrollX.value,
+            [(index - 1) * width, index * width, (index + 1) * width],
+            [0.3, 1, 0.3],
+            Extrapolate.CLAMP
+        );
+
+        return {
+            width: dotWidth,
+            opacity,
+            backgroundColor: accentColor,
+        };
+    });
+
+    return <Animated.View style={[styles.dot, dotStyle]} />;
 };
 
 export default function Onboarding() {
@@ -220,9 +251,16 @@ export default function Onboarding() {
 
             {/* App Logo/Title */}
             <Animated.View entering={FadeIn.delay(200)} style={styles.logoContainer}>
-                <View style={styles.logoCircle}>
-                    <Ionicons name="school" size={32} color={Colors.primary} />
-                </View>
+                <AutoRotating3D size={44} duration={7000} tilt={12}>
+                    <LinearGradient
+                        colors={[Colors.primary, Colors.secondary]}
+                        start={{ x: 0, y: 0 }}
+                        end={{ x: 1, y: 1 }}
+                        style={styles.logoCircle}
+                    >
+                        <Ionicons name="school" size={22} color="white" />
+                    </LinearGradient>
+                </AutoRotating3D>
                 <Text style={styles.logoText}>Brainlyx</Text>
             </Animated.View>
 
@@ -253,35 +291,14 @@ export default function Onboarding() {
             <View style={styles.footer}>
                 {/* Pagination Dots */}
                 <View style={styles.pagination}>
-                    {slides.map((slide, index) => {
-                        const dotStyle = useAnimatedStyle(() => {
-                            const dotWidth = interpolate(
-                                scrollX.value,
-                                [(index - 1) * width, index * width, (index + 1) * width],
-                                [8, 32, 8],
-                                Extrapolate.CLAMP
-                            );
-                            const opacity = interpolate(
-                                scrollX.value,
-                                [(index - 1) * width, index * width, (index + 1) * width],
-                                [0.3, 1, 0.3],
-                                Extrapolate.CLAMP
-                            );
-
-                            return {
-                                width: dotWidth,
-                                opacity,
-                                backgroundColor: slide.accentColor,
-                            };
-                        });
-
-                        return (
-                            <Animated.View
-                                key={index}
-                                style={[styles.dot, dotStyle]}
-                            />
-                        );
-                    })}
+                    {slides.map((slide, index) => (
+                        <PaginationDot
+                            key={index}
+                            index={index}
+                            accentColor={slide.accentColor}
+                            scrollX={scrollX}
+                        />
+                    ))}
                 </View>
 
                 {/* Buttons */}
@@ -332,9 +349,10 @@ const styles = StyleSheet.create({
         width: 44,
         height: 44,
         borderRadius: 22,
-        backgroundColor: Colors.primaryLight,
         justifyContent: 'center',
         alignItems: 'center',
+        borderWidth: 1,
+        borderColor: 'rgba(255,255,255,0.35)',
     },
     logoText: {
         ...Typography.h2,
