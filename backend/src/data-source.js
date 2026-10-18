@@ -1,6 +1,14 @@
 require('dotenv').config();
 const { DataSource } = require('typeorm');
 
+if (!process.env.DATABASE_URL) {
+    throw new Error(
+        'DATABASE_URL is not set.\n' +
+        'On Render: Dashboard > your web service > Environment > add DATABASE_URL (do not rely on .env, it is not deployed).\n' +
+        'Locally: backend/.env > DATABASE_URL.'
+    );
+}
+
 const AppDataSource = new DataSource({
     type: 'postgres',
     url: process.env.DATABASE_URL,
