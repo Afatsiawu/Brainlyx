@@ -1,4 +1,5 @@
 import { Brain, Calendar, FileText, Mic, Video, Zap } from 'lucide-react';
+import { TiltCard } from './ThreeDElements';
 
 const features = [
     {
@@ -49,9 +50,9 @@ const Features = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {features.map((feature, index) => (
-                        <div
+                        <TiltCard
                             key={index}
-                            className="group relative p-8 bg-background rounded-3xl border border-gray-100 hover:border-primary/20 transition-all duration-300 hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1"
+                            className="group relative p-8 bg-background rounded-3xl border border-gray-100 hover:border-primary/20 transition-all duration-300 hover:shadow-xl hover:shadow-primary/5"
                         >
                             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-secondary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-t-3xl" />
 
@@ -68,7 +69,7 @@ const Features = () => {
                             <p className="text-textSecondary leading-relaxed">
                                 {feature.description}
                             </p>
-                        </div>
+                        </TiltCard>
                     ))}
                 </div>
             </div>

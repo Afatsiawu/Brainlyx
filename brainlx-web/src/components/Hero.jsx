@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, Sparkles, Play } from 'lucide-react';
+import { ArrowRight, Brain, Sparkles, Play } from 'lucide-react';
+import { TiltCard, AutoRotating3D } from './ThreeDElements';
 
 const Hero = () => {
   return (
@@ -67,8 +68,23 @@ const Hero = () => {
           </button>
         </motion.div>
 
-        {/* Floating UI Elements / Mockup Placeholder */}
-        <motion.div 
+        {/* 3D AI core that slowly orbits */}
+        <AutoRotating3D className="relative mx-auto mt-16 h-52 w-52 md:h-64 md:w-64" duration={16}>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="h-36 w-36 md:h-48 md:w-48 animate-pulse rounded-full bg-gradient-to-br from-primary via-secondary to-accent shadow-2xl shadow-primary/40" />
+            <div className="absolute h-48 w-48 rounded-full border border-white/40" />
+            <div className="absolute flex h-16 w-16 items-center justify-center rounded-full bg-white/20 backdrop-blur-md">
+              <Brain className="h-8 w-8 text-white" />
+            </div>
+          </div>
+          {/* Orbiting satellites */}
+          <div className="absolute left-1/2 top-0 h-4 w-4 -translate-x-1/2 rounded-full bg-secondary shadow-lg" />
+          <div className="absolute left-1/2 top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent shadow-lg" />
+          <div className="absolute left-1/2 bottom-0 h-4 w-4 -translate-x-1/2 rounded-full bg-primary shadow-lg" />
+        </AutoRotating3D>
+
+        {/* 3D mockup that tilts towards the pointer */}
+        <TiltCard
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
@@ -80,32 +96,36 @@ const Hero = () => {
               {/* You can replace this with an actual screenshot later */}
             </div>
           </div>
-          
-          {/* Floating cards */}
-          <div className="absolute -left-12 top-1/3 p-4 bg-white rounded-2xl shadow-xl border border-gray-100 hidden lg:block animate-float">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
-                <span className="text-green-600 font-bold">A+</span>
-              </div>
-              <div>
-                <div className="text-sm font-semibold text-text">Physics Exam</div>
-                <div className="text-xs text-textSecondary">You crushed it!</div>
-              </div>
-            </div>
-          </div>
 
-          <div className="absolute -right-8 bottom-1/4 p-4 bg-white rounded-2xl shadow-xl border border-gray-100 hidden lg:block animate-float-delayed">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                <Brain className="h-5 w-5 text-primary" />
-              </div>
-              <div>
-                <div className="text-sm font-semibold text-text">Study Plan Generated</div>
-                <div className="text-xs text-textSecondary">Just now</div>
+          {/* Floating cards */}
+          <TiltCard className="absolute -left-12 top-1/3 p-4 bg-white rounded-2xl shadow-xl border border-gray-100 hidden lg:block">
+            <div className="animate-float">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
+                  <span className="text-green-600 font-bold">A+</span>
+                </div>
+                <div>
+                  <div className="text-sm font-semibold text-text">Physics Exam</div>
+                  <div className="text-xs text-textSecondary">You crushed it!</div>
+                </div>
               </div>
             </div>
-          </div>
-        </motion.div>
+          </TiltCard>
+
+          <TiltCard className="absolute -right-8 bottom-1/4 p-4 bg-white rounded-2xl shadow-xl border border-gray-100 hidden lg:block">
+            <div className="animate-float-delayed">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                  <Brain className="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <div className="text-sm font-semibold text-text">Study Plan Generated</div>
+                  <div className="text-xs text-textSecondary">Just now</div>
+                </div>
+              </div>
+            </div>
+          </TiltCard>
+        </TiltCard>
       </div>
     </div>
   );
