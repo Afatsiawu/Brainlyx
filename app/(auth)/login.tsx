@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/Button';
 import { GoogleLoginButton } from '@/components/ui/GoogleLoginButton';
 import { Input } from '@/components/ui/Input';
-import { Colors, Spacing, Typography } from '@/constants/theme';
+import { Colors, ClayShadows, Spacing, Typography } from '@/constants/theme';
 import { useAuth } from '@/context/AuthContext';
 import api, { setAuthToken } from '@/services/api';
 import { Link, useRouter } from 'expo-router';
@@ -139,18 +139,16 @@ const styles = StyleSheet.create({
         marginBottom: 40,
     },
     logoContainer: {
-        width: 120,
-        height: 120,
+        width: 124,
+        height: 124,
         marginBottom: 24,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'white',
-        borderRadius: 40,
-        shadowColor: Colors.secondary,
-        shadowOffset: { width: 0, height: 10 },
-        shadowOpacity: 0.1,
-        shadowRadius: 20,
-        elevation: 10,
+        backgroundColor: Colors.surface,
+        borderRadius: 48,
+        borderWidth: 1,
+        borderColor: 'rgba(255,255,255,0.7)',
+        ...ClayShadows.medium,
     },
     logo: {
         width: 80,
@@ -172,10 +170,9 @@ const styles = StyleSheet.create({
         gap: Spacing.md,
     },
     loginButton: {
-        backgroundColor: Colors.secondary,
         marginTop: Spacing.sm,
         height: 56,
-        borderRadius: 16,
+        borderRadius: 24,
     },
     footer: {
         flexDirection: 'row',

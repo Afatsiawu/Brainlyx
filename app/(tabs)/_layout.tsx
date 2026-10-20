@@ -1,4 +1,5 @@
 import { useMusic } from '@/context/MusicContext';
+import { ClayShadows, Colors } from '@/constants/theme';
 import { Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
 import React from 'react';
@@ -214,16 +215,15 @@ export default function TabLayout() {
 const styles = StyleSheet.create({
   outerContainer: {
     width: '100%',
-    backgroundColor: 'white',
-    // Removed rounded corners to make it a rectangle
-    borderTopWidth: 1,
-    borderTopColor: '#F0F0F0',
-    // Removed position: absolute to prevent it from overlapping content
+    backgroundColor: Colors.surface,
+    borderTopLeftRadius: 36,
+    borderTopRightRadius: 36,
+    ...ClayShadows.medium,
   },
   itemsWrapper: {
     flexDirection: 'row',
     width: '100%',
-    height: 65, // Clean, standard height
+    height: 68, // Clean, standard height
     alignItems: 'center',
     justifyContent: 'space-around',
     paddingHorizontal: 8,
@@ -245,14 +245,12 @@ const styles = StyleSheet.create({
     width: 54,
     height: 54,
     borderRadius: 27,
-    backgroundColor: 'white',
+    backgroundColor: Colors.surface,
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: COLORS.active,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.15,
-    shadowRadius: 5,
-    elevation: 8,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.7)',
+    ...ClayShadows.medium,
   },
   fab: {
     width: 48,

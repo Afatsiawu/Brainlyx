@@ -1,16 +1,16 @@
 export const Colors = {
-  primary: '#4F46E5', // Indigo
-  primaryLight: '#EEF2FF',
-  secondary: '#8B5CF6', // Purple (AI)
-  accent: '#14B8A6', // Teal
-  background: '#F9FAFB',
-  surface: '#FFFFFF',
-  text: '#111827',
-  textSecondary: '#6B7280',
-  error: '#EF4444',
-  success: '#10B981',
-  warning: '#F59E0B',
-  border: '#E5E7EB',
+  primary: '#6C6FF5', // Soft indigo (clay)
+  primaryLight: '#E4E4FC',
+  secondary: '#A78BFA', // Soft purple (clay AI)
+  accent: '#2DD4BF', // Soft teal (clay)
+  background: '#ECECF9', // Periwinkle mist
+  surface: '#F8F8FD', // Puffy near-white
+  text: '#2B2854', // Soft indigo ink
+  textSecondary: '#6E6A95',
+  error: '#FB7185',
+  success: '#34D399',
+  warning: '#FBBF24',
+  border: '#DCDCF2',
 };
 
 export const Spacing = {
@@ -47,6 +47,47 @@ export const Typography = {
     fontSize: 14,
     fontWeight: '400' as const,
     color: Colors.textSecondary,
+  },
+};
+
+// Claymorphism shadows: indigo-tinted, soft and puffy
+export const ClayShadows = {
+  small: {
+    shadowColor: '#4C4ED1',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.18,
+    shadowRadius: 16,
+    elevation: 6,
+  },
+  medium: {
+    shadowColor: '#4C4ED1',
+    shadowOffset: { width: 0, height: 14 },
+    shadowOpacity: 0.22,
+    shadowRadius: 24,
+    elevation: 10,
+  },
+  large: {
+    shadowColor: '#4C4ED1',
+    shadowOffset: { width: 0, height: 20 },
+    shadowOpacity: 0.26,
+    shadowRadius: 32,
+    elevation: 14,
+  },
+};
+
+// Clay input: soft inset feel via a white top highlight shadow + tinted fill
+export const Clay = {
+  input: {
+    backgroundColor: '#E7E7F5',
+    borderRadius: 18,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.7)',
+    borderTopWidth: 2,
+    borderTopColor: 'rgba(255,255,255,0.9)',
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+    color: Colors.text,
+    fontSize: 16,
   },
 };
 

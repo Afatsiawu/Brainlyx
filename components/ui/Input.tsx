@@ -95,27 +95,32 @@ const styles = StyleSheet.create({
     inputWrapper: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: Colors.surface,
-        borderRadius: 12,
+        backgroundColor: '#E7E7F5', // clay inset fill
+        borderRadius: 18,
         paddingHorizontal: Spacing.md,
-        height: 52,
-        borderWidth: 1.5,
+        height: 54,
+        borderWidth: 1,
+        borderTopWidth: 2.5,
+        borderColor: 'rgba(216,217,242,0.9)',
+        borderTopColor: 'rgba(255,255,255,0.95)', // puffy top highlight
+        shadowColor: '#4C4ED1',
+        shadowOffset: { width: 0, height: 6 },
+        shadowOpacity: 0.15,
+        shadowRadius: 12,
+        elevation: 4,
     },
-    defaultBorder: {
-        borderColor: Colors.border,
-    },
+    defaultBorder: {},
     focusedBorder: {
-        borderColor: Colors.secondary,
+        borderColor: Colors.primary,
     },
     errorBorder: {
         borderColor: Colors.error,
     },
     glow: {
         shadowColor: Colors.secondary,
-        shadowOffset: { width: 0, height: 0 },
-        shadowOpacity: 0.3,
-        shadowRadius: 8,
-        elevation: 5,
+        shadowOpacity: 0.35,
+        shadowRadius: 10,
+        elevation: 6,
     },
     icon: {
         marginRight: Spacing.sm,

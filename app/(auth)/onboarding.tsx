@@ -1,5 +1,5 @@
 import { AutoRotating3D, flipIn3D } from '@/components/ui/ThreeD';
-import { Colors, Spacing, Typography } from '@/constants/theme';
+import { Colors, ClayShadows, Spacing, Typography } from '@/constants/theme';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
@@ -353,6 +353,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderWidth: 1,
         borderColor: 'rgba(255,255,255,0.35)',
+        ...ClayShadows.small,
     },
     logoText: {
         ...Typography.h2,
@@ -368,10 +369,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         gap: 4,
-        paddingHorizontal: 16,
-        paddingVertical: 8,
+        paddingHorizontal: 18,
+        paddingVertical: 10,
         backgroundColor: Colors.surface,
-        borderRadius: 20,
+        borderRadius: 24,
+        borderWidth: 1,
+        borderColor: 'rgba(255,255,255,0.7)',
+        ...ClayShadows.small,
     },
     skipText: {
         ...Typography.caption,
@@ -387,8 +391,9 @@ const styles = StyleSheet.create({
     card: {
         width: '100%',
         height: height * 0.55,
-        borderRadius: 32,
+        borderRadius: 40,
         overflow: 'hidden',
+        ...ClayShadows.large,
     },
     gradientCard: {
         flex: 1,
@@ -456,9 +461,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         gap: 8,
-        paddingHorizontal: 16,
-        paddingVertical: 10,
-        borderRadius: 20,
+        paddingHorizontal: 18,
+        paddingVertical: 12,
+        borderRadius: 24,
+        borderWidth: 1,
+        borderColor: 'rgba(255,255,255,0.6)',
+        ...ClayShadows.small,
     },
     badgeText: {
         fontSize: 14,
@@ -484,6 +492,11 @@ const styles = StyleSheet.create({
     dot: {
         height: 8,
         borderRadius: 4,
+        shadowColor: '#4C4ED1',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.3,
+        shadowRadius: 4,
+        elevation: 3,
     },
     buttonContainer: {
         flexDirection: 'row',
@@ -504,7 +517,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 1,
-        borderColor: Colors.border,
+        borderColor: 'rgba(255,255,255,0.7)',
+        ...ClayShadows.small,
     },
     nextButton: {
         height: 56,
@@ -513,11 +527,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         gap: 8,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.3,
-        shadowRadius: 8,
-        elevation: 8,
+        borderWidth: 1,
+        borderColor: 'rgba(255,255,255,0.6)',
+        ...ClayShadows.medium,
     },
     nextButtonText: {
         fontSize: 17,
