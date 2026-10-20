@@ -4,13 +4,14 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
-import { Dimensions, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, FlatList, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Animated, {
     Extrapolate,
     FadeIn,
     FadeInUp,
     interpolate,
     SharedValue,
+    cancelAnimation,
     useAnimatedScrollHandler,
     useAnimatedStyle,
     useSharedValue,
@@ -61,16 +62,24 @@ const FloatingParticle = ({ delay, duration }: { delay: number, duration: number
     const opacity = useSharedValue(0.3);
 
     useEffect(() => {
-        translateY.value = withRepeat(
-            withTiming(-30, { duration }),
-            -1,
-            true
-        );
-        opacity.value = withRepeat(
-            withTiming(0.8, { duration: duration / 2 }),
-            -1,
-            true
-        );
+        // Looping animations are native-only: Reanimated's web cleanup crashes
+        // when a looping animation is torn down with its element.
+        if (Platform.OS !== 'web') {
+            translateY.value = withRepeat(
+                withTiming(-30, { duration }),
+                -1,
+                true
+            );
+            opacity.value = withRepeat(
+                withTiming(0.8, { duration: duration / 2 }),
+                -1,
+                true
+            );
+        }
+        return () => {
+            cancelAnimation(translateY);
+            cancelAnimation(opacity);
+        };
     }, [duration, translateY, opacity]);
 
     const animatedStyle = useAnimatedStyle(() => ({

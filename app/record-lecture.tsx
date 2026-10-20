@@ -13,6 +13,7 @@ import Animated, {
     FadeIn,
     FadeInDown,
     FadeInUp,
+    cancelAnimation,
     interpolate,
     useAnimatedStyle,
     useSharedValue,
@@ -46,6 +47,9 @@ export default function RecordLectureScreen() {
     useEffect(() => {
         return () => {
             if (timerRef.current) clearInterval(timerRef.current);
+            cancelAnimation(ripple1);
+            cancelAnimation(ripple2);
+            cancelAnimation(ripple3);
             if (recording) stopRecording();
         };
         // Unmount-only cleanup: deliberately not re-running when `recording`
@@ -55,6 +59,11 @@ export default function RecordLectureScreen() {
     }, []);
 
     const startRippleAnimation = () => {
+        // Looping ripples are native-only: Reanimated's web cleanup crashes
+        // when a looping animation is torn down with its element.
+        if (Platform.OS === 'web') {
+            return;
+        }
         ripple1.value = 0;
         ripple2.value = 0;
         ripple3.value = 0;
@@ -79,6 +88,9 @@ export default function RecordLectureScreen() {
         ripple1.value = withTiming(0);
         ripple2.value = withTiming(0);
         ripple3.value = withTiming(0);
+        cancelAnimation(ripple1);
+        cancelAnimation(ripple2);
+        cancelAnimation(ripple3);
     };
 
     const handleStartPress = () => {

@@ -13,6 +13,7 @@ import Markdown from 'react-native-markdown-display';
 import Animated, {
   FadeInRight,
   FadeOutLeft,
+  cancelAnimation,
   interpolate,
   useAnimatedStyle,
   useSharedValue,
@@ -349,11 +350,19 @@ export default function DashboardScreen() {
       setQuoteIndex((prev) => (prev + 1) % MOTIVATIONAL_QUOTES.length);
     }, 10000); // 10 seconds
 
-    bgAnim.value = withRepeat(withTiming(1, { duration: 5000 }), -1, true);
+    // Looping animation is native-only: Reanimated's web cleanup crashes when
+    // a looping animation is torn down with its element.
+    if (Platform.OS !== 'web') {
+      bgAnim.value = withRepeat(withTiming(1, { duration: 5000 }), -1, true);
+    }
 
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      // Cancel the looping animation on unmount (required on web, where a
+      // running infinite animation crashes on element removal).
+      cancelAnimation(bgAnim);
+    };
   }, [bgAnim]);
-
   const animatedBgStyle = useAnimatedStyle(() => ({
     transform: [
       { rotate: `${bgAnim.value * 15}deg` },

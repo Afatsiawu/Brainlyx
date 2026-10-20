@@ -3,6 +3,7 @@ import {
     GestureResponderEvent,
     PanResponder,
     PanResponderGestureState,
+    Platform,
     StyleProp,
     StyleSheet,
     ViewStyle
@@ -10,6 +11,7 @@ import {
 import Animated, {
     Easing,
     Keyframe,
+    cancelAnimation,
     useAnimatedStyle,
     useSharedValue,
     withRepeat,
@@ -67,11 +69,21 @@ export function AutoRotating3D({
     const spin = useSharedValue(0);
 
     useEffect(() => {
+        // Reanimated's web backend crashes when a looping animation is removed
+        // (its cleanup reads layout from a detached element), so the spin is
+        // native-only. The static 3D tilt still renders on web.
+        if (Platform.OS === 'web') {
+            return;
+        }
         spin.value = withRepeat(
             withTiming(360, { duration, easing: Easing.linear }),
             -1,
             false
         );
+        // Stop the looping animation on unmount.
+        return () => {
+            cancelAnimation(spin);
+        };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

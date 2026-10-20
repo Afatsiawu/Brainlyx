@@ -4,7 +4,8 @@ import { ThemeProvider as AppThemeProvider } from '@/context/ThemeContext';
 import { DefaultTheme, ThemeProvider as NavigationThemeProvider } from '@react-navigation/native';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
+import { Platform } from 'react-native';
+import { LayoutAnimationConfig } from 'react-native-reanimated';
 
 export const unstable_settings = {
   anchor: '(tabs)',
@@ -28,7 +29,12 @@ export default function RootLayout() {
     <AppThemeProvider>
       <MusicProvider>
         <AuthProvider>
-          <RootLayoutNav />
+          {/* On web, Reanimated's animation teardown crashes when a screen
+              unmounts (it reads layout from a detached element), so
+              entering/layout animations are skipped there. */}
+          <LayoutAnimationConfig skipEntering={Platform.OS === 'web'}>
+            <RootLayoutNav />
+          </LayoutAnimationConfig>
         </AuthProvider>
       </MusicProvider>
     </AppThemeProvider>
