@@ -26,26 +26,31 @@ export const Typography = {
   h1: {
     fontSize: 28,
     fontWeight: '700' as const,
+    fontFamily: 'Nunito_700Bold',
     color: Colors.text,
   },
   h2: {
     fontSize: 22,
     fontWeight: '600' as const,
+    fontFamily: 'Nunito_600SemiBold',
     color: Colors.text,
   },
   h3: {
     fontSize: 18,
     fontWeight: '600' as const,
+    fontFamily: 'Nunito_600SemiBold',
     color: Colors.text,
   },
   body: {
     fontSize: 16,
     fontWeight: '400' as const,
+    fontFamily: 'Nunito_400Regular',
     color: Colors.text,
   },
   caption: {
     fontSize: 14,
     fontWeight: '400' as const,
+    fontFamily: 'Nunito_400Regular',
     color: Colors.textSecondary,
   },
 };

@@ -395,7 +395,7 @@ export default function DashboardScreen() {
         {/* Header Section */}
         <View style={dynamicStyles.header}>
           <View>
-            <Text style={dynamicStyles.greeting}>Hello, {user?.name?.split(' ')[0] || 'Student'}! 👋</Text>
+            <Text style={dynamicStyles.greeting}>Hello, {user?.name?.split(' ')[0] || 'Student'}!</Text>
             <Text style={dynamicStyles.subtitle}>Ready to ace your exams?</Text>
           </View>
           <TouchableOpacity onPress={() => router.push('/(tabs)/profile')} style={dynamicStyles.profileButton}>

@@ -94,7 +94,7 @@ export default function ProfileScreen() {
                         >
                             <View style={styles.premiumContent}>
                                 <View>
-                                    <Text style={styles.premiumTitle}>Unlock Full Potential 🚀</Text>
+                                    <Text style={styles.premiumTitle}>Unlock Full Potential</Text>
                                     <Text style={styles.premiumSubtitle}>Get Unlimited Access to all features</Text>
                                 </View>
                                 <Ionicons name="diamond" size={40} color="rgba(255,255,255,0.3)" style={styles.premiumIcon} />
