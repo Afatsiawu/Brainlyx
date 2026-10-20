@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 
 /**
  * Converts the pointer position over an element into 3D rotation values,

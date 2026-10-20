@@ -1,8 +1,15 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, Brain, Sparkles, Play } from 'lucide-react';
+import { ArrowRight, Brain, Play, Sparkles, X } from 'lucide-react';
+import { useState } from 'react';
 import { TiltCard, AutoRotating3D } from './ThreeDElements';
 
 const Hero = () => {
+  const [showDemo, setShowDemo] = useState(false);
+
+  const scrollToId = (id) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <div className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
       {/* Background gradients */}
@@ -52,7 +59,10 @@ const Hero = () => {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="flex flex-col sm:flex-row gap-4 justify-center items-center"
         >
-          <button className="group relative px-8 py-4 bg-primary text-white rounded-2xl font-semibold shadow-xl shadow-primary/25 hover:shadow-primary/40 hover:-translate-y-0.5 transition-all overflow-hidden w-full sm:w-auto">
+          <button
+            onClick={() => scrollToId('waitlist')}
+            className="group relative px-8 py-4 bg-primary text-white rounded-2xl font-semibold shadow-xl shadow-primary/25 hover:shadow-primary/40 hover:-translate-y-0.5 transition-all overflow-hidden w-full sm:w-auto"
+          >
             <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-shimmer" />
             <span className="flex items-center justify-center gap-2">
               Start Learning Free
@@ -60,7 +70,10 @@ const Hero = () => {
             </span>
           </button>
           
-          <button className="flex items-center justify-center gap-2 px-8 py-4 bg-white text-text border border-gray-200 rounded-2xl font-semibold hover:bg-gray-50 hover:border-gray-300 transition-all w-full sm:w-auto group">
+          <button
+            onClick={() => setShowDemo(true)}
+            className="flex items-center justify-center gap-2 px-8 py-4 bg-white text-text border border-gray-200 rounded-2xl font-semibold hover:bg-gray-50 hover:border-gray-300 transition-all w-full sm:w-auto group"
+          >
             <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center group-hover:bg-primary/10 group-hover:text-primary transition-colors">
               <Play className="h-4 w-4 fill-current" />
             </div>
@@ -127,6 +140,48 @@ const Hero = () => {
           </TiltCard>
         </TiltCard>
       </div>
+
+      {/* Demo modal */}
+      {showDemo && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4"
+          onClick={() => setShowDemo(false)}
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ type: 'spring', stiffness: 260, damping: 22 }}
+            className="relative w-full max-w-4xl rounded-3xl bg-gray-900 p-2 shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setShowDemo(false)}
+              aria-label="Close demo"
+              className="absolute -top-3 -right-3 z-10 w-9 h-9 rounded-full bg-white text-text shadow-lg flex items-center justify-center hover:bg-gray-100 transition-colors"
+            >
+              <X className="h-5 w-5" />
+            </button>
+            <div className="rounded-2xl bg-gray-800/50 backdrop-blur aspect-video overflow-hidden flex flex-col items-center justify-center border border-white/10 gap-4">
+              <Brain className="h-16 w-16 text-white/80" />
+              <div className="text-white font-semibold text-lg">Brainlyx — Product Demo</div>
+              <div className="text-gray-400 text-sm max-w-md text-center px-6">
+                Full walkthrough video coming soon. In the meantime, join the waitlist below and be the first to try it.
+              </div>
+              <button
+                onClick={() => {
+                  setShowDemo(false);
+                  setTimeout(() => scrollToId('waitlist'), 150);
+                }}
+                className="mt-2 bg-primary text-white px-6 py-3 rounded-xl font-semibold shadow-lg shadow-primary/30 hover:bg-opacity-90 transition-all"
+              >
+                Join the Waitlist
+              </button>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
     </div>
   );
 };
