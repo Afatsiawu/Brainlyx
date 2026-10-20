@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Brain, Play, Sparkles, X } from 'lucide-react';
 import { useState } from 'react';
 import { ClayButton, ClayCard, ClayChip } from './ClayElements';
-import { TiltCard, AutoRotating3D } from './ThreeDElements';
+import { TiltCard } from './ThreeDElements';
 
 const Hero = () => {
   const [showDemo, setShowDemo] = useState(false);
@@ -83,21 +83,6 @@ const Hero = () => {
             Watch Demo
           </ClayButton>
         </motion.div>
-
-        {/* 3D AI core that slowly orbits */}
-        <AutoRotating3D className="relative mx-auto mt-16 h-52 w-52 md:h-64 md:w-64" duration={16}>
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="h-36 w-36 md:h-48 md:w-48 animate-pulse rounded-full bg-gradient-to-br from-primary via-secondary to-accent shadow-2xl shadow-primary/40" />
-            <div className="absolute h-48 w-48 rounded-full border border-white/40" />
-            <div className="absolute flex h-16 w-16 items-center justify-center rounded-full bg-white/20 backdrop-blur-md">
-              <Brain className="h-8 w-8 text-white" />
-            </div>
-          </div>
-          {/* Orbiting satellites */}
-          <div className="absolute left-1/2 top-0 h-4 w-4 -translate-x-1/2 rounded-full bg-secondary shadow-lg" />
-          <div className="absolute left-1/2 top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent shadow-lg" />
-          <div className="absolute left-1/2 bottom-0 h-4 w-4 -translate-x-1/2 rounded-full bg-primary shadow-lg" />
-        </AutoRotating3D>
 
         {/* 3D mockup that tilts towards the pointer */}
         <TiltCard
