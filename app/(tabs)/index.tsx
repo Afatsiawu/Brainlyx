@@ -19,7 +19,7 @@ import Animated, {
   useSharedValue,
   withRepeat,
   withTiming
-} from 'react-native-reanimated';
+} from '@/components/ui/Motion';
 
 const MOTIVATIONAL_QUOTES = [
   { text: "The expert in anything was once a beginner.", author: "Helen Hayes" },

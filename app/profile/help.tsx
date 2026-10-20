@@ -3,7 +3,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Animated, { FadeIn, Layout } from 'react-native-reanimated';
+import Animated, { FadeIn, Layout } from '@/components/ui/Motion';
 
 export default function HelpScreen() {
     const router = useRouter();

@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect, useRouter } from 'expo-router';
 import React, { useCallback, useState } from 'react';
 import { Alert, Linking, RefreshControl, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Animated, { FadeInDown, FadeInRight, Layout, ZoomIn } from 'react-native-reanimated';
+import Animated, { FadeInDown, FadeInRight, Layout, ZoomIn } from '@/components/ui/Motion';
 
 export default function StudyScreen() {
     const router = useRouter();

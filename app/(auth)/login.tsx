@@ -7,7 +7,7 @@ import api, { setAuthToken } from '@/services/api';
 import { Link, useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Alert, KeyboardAvoidingView, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
+import Animated, { FadeInDown, FadeInUp } from '@/components/ui/Motion';
 
 const logoImg = require('@/assets/images/icon.png');
 

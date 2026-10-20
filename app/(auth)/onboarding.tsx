@@ -17,7 +17,7 @@ import Animated, {
     useSharedValue,
     withRepeat,
     withTiming
-} from 'react-native-reanimated';
+} from '@/components/ui/Motion';
 
 const { width, height } = Dimensions.get('window');
 

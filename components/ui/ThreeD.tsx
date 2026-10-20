@@ -6,6 +6,7 @@ import {
     Platform,
     StyleProp,
     StyleSheet,
+    View,
     ViewStyle
 } from 'react-native';
 import Animated, {
@@ -24,8 +25,14 @@ import Animated, {
  *
  * Usage: <Animated.View entering={flipIn3D(200)} />
  */
-export const flipIn3D = (delay = 0, duration = 600) =>
-    new Keyframe({
+export const flipIn3D = (delay = 0, duration = 600) => {
+    // Reanimated's web backend crashes when an animated element is torn down
+    // (its cleanup reads layout from a detached element), so entrance
+    // animations are disabled on web. Native keeps the full effect.
+    if (Platform.OS === 'web') {
+        return undefined;
+    }
+    return new Keyframe({
         0: {
             opacity: 0,
             transform: [
@@ -45,6 +52,7 @@ export const flipIn3D = (delay = 0, duration = 600) =>
     })
         .duration(duration)
         .delay(delay);
+};
 
 interface AutoRotating3DProps {
     children: React.ReactNode;
@@ -94,6 +102,16 @@ export function AutoRotating3D({
             { rotateY: `${spin.value}deg` },
         ],
     }));
+
+    // On web, render a plain view: Reanimated's web animation teardown can
+    // crash when the element is removed, so no animated style is applied.
+    if (Platform.OS === 'web') {
+        return (
+            <View style={[styles.autoRotating, { width: size, height: size }, style]}>
+                {children}
+            </View>
+        );
+    }
 
     return (
         <Animated.View
@@ -164,6 +182,12 @@ export function Tilt3DCard({
             { rotateY: `${rotateY.value}deg` },
         ],
     }));
+
+    // Plain view on web: Reanimated's web animation teardown can crash when
+    // the animated element is removed.
+    if (Platform.OS === 'web') {
+        return <View style={style}>{children}</View>;
+    }
 
     return (
         <Animated.View style={[style, animatedStyle]} {...panResponder.panHandlers}>

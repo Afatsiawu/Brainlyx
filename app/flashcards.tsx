@@ -12,7 +12,7 @@ import Animated, {
     useAnimatedStyle,
     useSharedValue,
     withSpring
-} from 'react-native-reanimated';
+} from '@/components/ui/Motion';
 
 const { width, height } = Dimensions.get('window');
 

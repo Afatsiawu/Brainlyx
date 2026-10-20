@@ -20,7 +20,7 @@ import Animated, {
     withDelay,
     withRepeat,
     withTiming
-} from 'react-native-reanimated';
+} from '@/components/ui/Motion';
 
 export default function RecordLectureScreen() {
     const [recording, setRecording] = useState<Audio.Recording | null>(null);

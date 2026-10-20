@@ -15,7 +15,7 @@ import {
     TouchableOpacity,
     View
 } from 'react-native';
-import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
+import Animated, { FadeInDown, FadeInUp } from '@/components/ui/Motion';
 
 interface Playlist {
     id: string;

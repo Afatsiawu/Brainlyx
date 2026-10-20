@@ -6,7 +6,7 @@ import * as DocumentPicker from 'expo-document-picker';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Animated, { FadeIn, FadeInUp, SlideInDown } from 'react-native-reanimated';
+import Animated, { FadeIn, FadeInUp, SlideInDown } from '@/components/ui/Motion';
 
 export default function UploadScreen() {
     const router = useRouter();
