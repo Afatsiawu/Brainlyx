@@ -21,6 +21,7 @@ const AppDataSource = new DataSource({
         require('./models/User'),
         require('./models/Document'),
         require('./models/ChatSession'),
+        require('./models/Waitlist'),
     ],
     subscribers: [],
     migrations: [],

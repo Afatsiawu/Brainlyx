@@ -21,6 +21,12 @@ const musicRoutes = require('./routes/music');
 app.use('/api/v1/music', musicRoutes);
 const aiRoutes = require('./routes/ai');
 app.use('/api/v1/ai', aiRoutes);
+const waitlistRoutes = require('./routes/waitlist');
+app.use('/api/v1/waitlist', waitlistRoutes);
+
+app.get('/api/v1/health', (req, res) => {
+    res.json({ status: 'ok', database: AppDataSource.isInitialized ? 'connected' : 'disconnected' });
+});
 
 app.get('/', (req, res) => {
     res.json({ message: 'Welcome to Brainlyx API (Node.js)' });
