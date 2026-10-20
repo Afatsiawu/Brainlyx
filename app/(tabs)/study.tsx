@@ -126,6 +126,15 @@ export default function StudyScreen() {
                     route="/questions"
                     delay={200}
                 />
+
+                <StudyMode
+                    title="Podcast"
+                    subtitle="Turn a document into an audio lesson"
+                    icon="headset-outline"
+                    color={Colors.warning}
+                    route="/podcast"
+                    delay={300}
+                />
             </View>
 
             <View style={styles.section}>

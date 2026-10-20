@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api/v1'; // Override with VITE_API_URL for deployed builds
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://brainlyx.onrender.com/api/v1'; // Deployed backend; override with VITE_API_URL=http://localhost:3000/api/v1 for local dev
 
 export const api = {
     // Generic fetch wrapper

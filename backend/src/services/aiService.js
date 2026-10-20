@@ -310,6 +310,33 @@ const generateLectureInsights = async (text, topic) => {
     }
 };
 
+// Generate a two-host podcast-style conversation script from document text
+const generatePodcastScript = async (text) => {
+    if (!process.env.GROQ_API_KEY) {
+        throw new Error('Groq API key not configured');
+    }
+
+    const systemPrompt = `You are a podcast scriptwriter. Given study material, create an engaging, conversational podcast script between two hosts: Alex (enthusiastic, asks great questions) and Sam (knowledgeable, explains clearly). The podcast should make the material fun and easy to understand.`;
+
+    const userPrompt = `Create a podcast script from this study material. Return JSON: { "title": "...", "segments": [{ "host": "Alex" or "Sam", "text": "..." }] }. Include 8-12 segments, each 2-4 sentences. Make it conversational, with natural transitions. Material: ${text.substring(0, 8000)}`;
+
+    try {
+        const completion = await getGroqClient().chat.completions.create({
+            messages: [
+                { role: 'system', content: systemPrompt },
+                { role: 'user', content: userPrompt }
+            ],
+            model: DEFAULT_MODEL,
+            response_format: { type: "json_object" },
+        });
+
+        return JSON.parse(completion.choices[0].message.content);
+    } catch (error) {
+        console.error('Podcast generation failed:', error);
+        throw new Error('Failed to generate podcast script. Please try again later.');
+    }
+};
+
 module.exports = {
     extractText,
     generateContent,
@@ -318,5 +345,6 @@ module.exports = {
     generateFlashcardsByTopic,
     generateComprehensiveInsights,
     generateLectureInsights,
+    generatePodcastScript,
     getGroqClient
 };

@@ -104,4 +104,50 @@ router.post('/transcribe-and-generate', upload.single('audio'), async (req, res)
     }
 });
 
+router.post('/generate-podcast/:documentId', async (req, res) => {
+    const { documentId } = req.params;
+
+    try {
+        const documentRepository = AppDataSource.getRepository(Document);
+        const doc = await documentRepository.findOneBy({ id: documentId });
+
+        if (!doc) return res.status(404).json({ error: 'Document not found' });
+
+        // Audio recordings need transcription first (not yet available)
+        if (doc.type === 'audio') {
+            return res.status(400).json({ error: 'Podcast from audio recordings is coming soon. For now, upload a PDF or text document.' });
+        }
+
+        const text = await extractText(doc.path);
+        const { generatePodcastScript } = require('../services/aiService');
+        const result = await generatePodcastScript(text);
+
+        // Save to document
+        doc.questions = JSON.stringify(result); // reuse questions column for podcast data
+        await documentRepository.save(doc);
+
+        res.json({ ...result, id: doc.id });
+    } catch (error) {
+        console.error('Podcast generation route failed:', error);
+        res.status(500).json({ error: error.message || 'Failed to generate podcast' });
+    }
+});
+
+router.post('/generate-podcast-by-topic', async (req, res) => {
+    const { topic } = req.body;
+
+    if (!topic) {
+        return res.status(400).json({ error: 'Topic is required' });
+    }
+
+    try {
+        const { generatePodcastScript } = require('../services/aiService');
+        const result = await generatePodcastScript(topic);
+        res.json(result);
+    } catch (error) {
+        console.error('Podcast generation by topic failed:', error);
+        res.status(500).json({ error: error.message || 'Failed to generate podcast' });
+    }
+});
+
 module.exports = router;
