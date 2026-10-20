@@ -65,6 +65,27 @@ export default function FlashcardsScreen() {
     const translateX = useSharedValue(0);
     const rotate = useSharedValue(0);
 
+    const nextCard = () => {
+        if (currentIndex < cards.length - 1) {
+            setCurrentIndex(currentIndex + 1);
+            setFlipped(false);
+            rotate.value = 0;
+            translateX.value = 0;
+        } else {
+            Alert.alert("Completed!", "You've reviewed all cards.", [
+                {
+                    text: "Restart", onPress: () => {
+                        setCurrentIndex(0);
+                        setFlipped(false);
+                        rotate.value = 0;
+                        translateX.value = 0;
+                    }
+                },
+                { text: "Finish", onPress: () => router.back() }
+            ]);
+        }
+    };
+
     const onFlip = () => {
         setFlipped(!flipped);
         rotate.value = withSpring(flipped ? 0 : 180);
@@ -117,27 +138,6 @@ export default function FlashcardsScreen() {
             ],
         };
     });
-
-    const nextCard = () => {
-        if (currentIndex < cards.length - 1) {
-            setCurrentIndex(currentIndex + 1);
-            setFlipped(false);
-            rotate.value = 0;
-            translateX.value = 0;
-        } else {
-            Alert.alert("Completed!", "You've reviewed all cards.", [
-                {
-                    text: "Restart", onPress: () => {
-                        setCurrentIndex(0);
-                        setFlipped(false);
-                        rotate.value = 0;
-                        translateX.value = 0;
-                    }
-                },
-                { text: "Finish", onPress: () => router.back() }
-            ]);
-        }
-    };
 
     const generateByTopic = async () => {
         if (!topic.trim()) {
