@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, Brain, Play, Sparkles, X } from 'lucide-react';
 import { useState } from 'react';
+import { ClayButton, ClayCard, ClayChip } from './ClayElements';
 import { TiltCard, AutoRotating3D } from './ThreeDElements';
 
 const Hero = () => {
@@ -11,7 +12,7 @@ const Hero = () => {
   };
 
   return (
-    <div className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+    <div className="relative pt-28 sm:pt-36 pb-20 lg:pb-32 overflow-hidden">
       {/* Background gradients */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl pointer-events-none">
         <div className="absolute top-20 left-10 w-72 h-72 bg-primary/20 rounded-full blur-3xl mix-blend-multiply filter opacity-70 animate-blob"></div>
@@ -24,9 +25,9 @@ const Hero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2 bg-white border border-gray-200 rounded-full px-4 py-1.5 mb-8 shadow-sm hover:shadow-md transition-shadow cursor-default"
+          className="clay-chip inline-flex items-center gap-2 rounded-full px-5 py-2.5 mb-8"
         >
-          <span className="flex h-2 w-2 rounded-full bg-success"></span>
+          <span className="flex h-2.5 w-2.5 rounded-full bg-success shadow-inner"></span>
           <span className="text-sm font-medium text-textSecondary">New: AI Study Planner is live</span>
           <ArrowRight className="h-4 w-4 text-textSecondary" />
         </motion.div>
@@ -59,26 +60,28 @@ const Hero = () => {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="flex flex-col sm:flex-row gap-4 justify-center items-center"
         >
-          <button
+          <ClayButton
+            variant="primary"
             onClick={() => scrollToId('waitlist')}
-            className="group relative px-8 py-4 bg-primary text-white rounded-2xl font-semibold shadow-xl shadow-primary/25 hover:shadow-primary/40 hover:-translate-y-0.5 transition-all overflow-hidden w-full sm:w-auto"
+            className="group relative px-8 py-4 rounded-2xl font-semibold overflow-hidden w-full sm:w-auto"
           >
-            <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-shimmer" />
-            <span className="flex items-center justify-center gap-2">
+            <span className="relative z-10 flex items-center justify-center gap-2">
               Start Learning Free
               <Sparkles className="h-5 w-5" />
             </span>
-          </button>
+            <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:animate-shimmer" />
+          </ClayButton>
           
-          <button
+          <ClayButton
+            variant="white"
             onClick={() => setShowDemo(true)}
-            className="flex items-center justify-center gap-2 px-8 py-4 bg-white text-text border border-gray-200 rounded-2xl font-semibold hover:bg-gray-50 hover:border-gray-300 transition-all w-full sm:w-auto group"
+            className="flex items-center justify-center gap-3 px-8 py-4 rounded-2xl font-semibold w-full sm:w-auto"
           >
-            <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center group-hover:bg-primary/10 group-hover:text-primary transition-colors">
-              <Play className="h-4 w-4 fill-current" />
-            </div>
+            <ClayChip variant="primary" className="rounded-full p-1.5">
+              <Play className="h-3.5 w-3.5 fill-current text-primary" />
+            </ClayChip>
             Watch Demo
-          </button>
+          </ClayButton>
         </motion.div>
 
         {/* 3D AI core that slowly orbits */}
@@ -103,41 +106,41 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.5 }}
           className="mt-20 relative mx-auto max-w-5xl"
         >
-          <div className="relative rounded-3xl bg-gray-900 p-2 shadow-2xl ring-1 ring-gray-900/10">
-            <div className="relative rounded-2xl bg-gray-800/50 backdrop-blur aspect-[16/9] overflow-hidden flex items-center justify-center border border-white/10">
+          <div className="clay rounded-[2.5rem] p-3 sm:p-4">
+            <div className="rounded-[1.75rem] bg-gray-900 aspect-[16/9] overflow-hidden flex items-center justify-center border border-white/5">
               <div className="text-gray-500 font-medium">App Interface Mockup / Screenshot</div>
               {/* You can replace this with an actual screenshot later */}
             </div>
           </div>
 
           {/* Floating cards */}
-          <TiltCard className="absolute -left-12 top-1/3 p-4 bg-white rounded-2xl shadow-xl border border-gray-100 hidden lg:block">
+          <ClayCard className="absolute -left-12 top-1/3 p-4 hidden lg:block max-w-[210px]">
             <div className="animate-float">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
-                  <span className="text-green-600 font-bold">A+</span>
-                </div>
+                <ClayChip variant="success" className="rounded-full w-10 h-10 flex items-center justify-center text-sm">
+                  <span className="text-success font-bold">A+</span>
+                </ClayChip>
                 <div>
                   <div className="text-sm font-semibold text-text">Physics Exam</div>
                   <div className="text-xs text-textSecondary">You crushed it!</div>
                 </div>
               </div>
             </div>
-          </TiltCard>
+          </ClayCard>
 
-          <TiltCard className="absolute -right-8 bottom-1/4 p-4 bg-white rounded-2xl shadow-xl border border-gray-100 hidden lg:block">
+          <ClayCard className="absolute -right-8 bottom-1/4 p-4 hidden lg:block max-w-[210px]">
             <div className="animate-float-delayed">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                <ClayChip variant="primary" className="rounded-full w-10 h-10 flex items-center justify-center">
                   <Brain className="h-5 w-5 text-primary" />
-                </div>
+                </ClayChip>
                 <div>
                   <div className="text-sm font-semibold text-text">Study Plan Generated</div>
                   <div className="text-xs text-textSecondary">Just now</div>
                 </div>
               </div>
             </div>
-          </TiltCard>
+          </ClayCard>
         </TiltCard>
       </div>
 
@@ -146,38 +149,41 @@ const Hero = () => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4"
+          className="fixed inset-0 z-[100] bg-[#2B2854]/40 backdrop-blur-md flex items-center justify-center p-4"
           onClick={() => setShowDemo(false)}
         >
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, scale: 0.9, y: 24 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ type: 'spring', stiffness: 260, damping: 22 }}
-            className="relative w-full max-w-4xl rounded-3xl bg-gray-900 p-2 shadow-2xl"
+            className="clay relative w-full max-w-4xl rounded-[2.5rem] p-4 sm:p-5"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={() => setShowDemo(false)}
               aria-label="Close demo"
-              className="absolute -top-3 -right-3 z-10 w-9 h-9 rounded-full bg-white text-text shadow-lg flex items-center justify-center hover:bg-gray-100 transition-colors"
+              className="clay-chip absolute -top-3 -right-3 z-10 w-10 h-10 rounded-full flex items-center justify-center text-text hover:brightness-95"
             >
               <X className="h-5 w-5" />
             </button>
-            <div className="rounded-2xl bg-gray-800/50 backdrop-blur aspect-video overflow-hidden flex flex-col items-center justify-center border border-white/10 gap-4">
-              <Brain className="h-16 w-16 text-white/80" />
+            <div className="rounded-[1.75rem] bg-gray-900 aspect-video overflow-hidden flex flex-col items-center justify-center gap-4 p-6">
+              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary via-secondary to-accent shadow-2xl shadow-primary/40 flex items-center justify-center animate-pulse">
+                <Brain className="h-8 w-8 text-white" />
+              </div>
               <div className="text-white font-semibold text-lg">Brainlyx — Product Demo</div>
-              <div className="text-gray-400 text-sm max-w-md text-center px-6">
+              <div className="text-gray-400 text-sm max-w-md text-center">
                 Full walkthrough video coming soon. In the meantime, join the waitlist below and be the first to try it.
               </div>
-              <button
+              <ClayButton
+                variant="primary"
                 onClick={() => {
                   setShowDemo(false);
                   setTimeout(() => scrollToId('waitlist'), 150);
                 }}
-                className="mt-2 bg-primary text-white px-6 py-3 rounded-xl font-semibold shadow-lg shadow-primary/30 hover:bg-opacity-90 transition-all"
+                className="mt-2 px-7 py-3.5 rounded-2xl font-semibold"
               >
                 Join the Waitlist
-              </button>
+              </ClayButton>
             </div>
           </motion.div>
         </motion.div>

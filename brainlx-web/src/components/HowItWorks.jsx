@@ -1,5 +1,5 @@
 import { FileText, Brain, Calendar } from 'lucide-react';
-import { TiltCard } from './ThreeDElements';
+import { ClayCard, ClayChip } from './ClayElements';
 
 const steps = [
     {
@@ -7,24 +7,27 @@ const steps = [
         step: '01',
         title: 'Upload your material',
         description: 'Drop in PDFs, lecture recordings, or notes — Brainlyx ingests them instantly.',
+        chip: 'primary',
     },
     {
         icon: <Brain className="h-7 w-7" />,
         step: '02',
         title: 'AI analyzes everything',
         description: 'Our AI summarizes, extracts key concepts, and builds flashcards and questions automatically.',
+        chip: 'secondary',
     },
     {
         icon: <Calendar className="h-7 w-7" />,
         step: '03',
         title: 'Study your way',
         description: 'Follow a personalized study plan, quiz yourself, and track progress as your understanding grows.',
+        chip: 'accent',
     },
 ];
 
 const HowItWorks = () => {
     return (
-        <section id="how-it-works" className="py-24 bg-background scroll-mt-20">
+        <section id="how-it-works" className="py-24 scroll-mt-24">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center max-w-3xl mx-auto mb-16">
                     <h2 className="text-base font-semibold text-primary tracking-wide uppercase">How it Works</h2>
@@ -38,21 +41,21 @@ const HowItWorks = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {steps.map((item) => (
-                        <TiltCard
-                            key={item.step}
-                            className="group relative p-8 bg-white rounded-3xl border border-gray-100 hover:border-primary/20 transition-all duration-300 hover:shadow-xl hover:shadow-primary/5"
-                        >
+                        <ClayCard key={item.step} className="group p-8">
                             <div className="flex items-center justify-between mb-6">
-                                <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                                <ClayChip
+                                    variant={item.chip}
+                                    className="w-14 h-14 rounded-2xl flex items-center justify-center text-white transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3"
+                                >
                                     {item.icon}
-                                </div>
-                                <span className="text-4xl font-black text-gray-100 group-hover:text-primary/10 transition-colors">
+                                </ClayChip>
+                                <span className="clay-chip rounded-full px-4 py-1.5 text-sm font-bold text-primary">
                                     {item.step}
                                 </span>
                             </div>
                             <h3 className="text-xl font-bold text-text mb-3">{item.title}</h3>
                             <p className="text-textSecondary leading-relaxed">{item.description}</p>
-                        </TiltCard>
+                        </ClayCard>
                     ))}
                 </div>
             </div>

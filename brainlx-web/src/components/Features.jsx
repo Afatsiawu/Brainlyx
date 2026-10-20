@@ -1,42 +1,48 @@
 import { Brain, Calendar, FileText, Mic, Video, Zap } from 'lucide-react';
-import { TiltCard } from './ThreeDElements';
+import { ClayCard, ClayChip } from './ClayElements';
 
 const features = [
     {
         icon: <FileText className="h-6 w-6" />,
         title: "Smart Document Analysis",
-        description: "Upload PDFs or documents and let our AI summarize, extract key points, and answer your questions instantly."
+        description: "Upload PDFs or documents and let our AI summarize, extract key points, and answer your questions instantly.",
+        chip: "primary",
     },
     {
         icon: <Video className="h-6 w-6" />,
         title: "Lecture Recording & Transcription",
-        description: "Record your lectures and get accurate transcriptions with key takeaways automatically generated."
+        description: "Record your lectures and get accurate transcriptions with key takeaways automatically generated.",
+        chip: "secondary",
     },
     {
         icon: <Brain className="h-6 w-6" />,
         title: "AI Study Assistant",
-        description: "Your personal tutor available 24/7 to explain complex topics, solve problems, and quiz your knowledge."
+        description: "Your personal tutor available 24/7 to explain complex topics, solve problems, and quiz your knowledge.",
+        chip: "primary",
     },
     {
         icon: <Calendar className="h-6 w-6" />,
         title: "Personalized Study Plans",
-        description: "Get adaptive study schedules generated based on your goals, deadlines, and learning pace."
+        description: "Get adaptive study schedules generated based on your goals, deadlines, and learning pace.",
+        chip: "accent",
     },
     {
         icon: <Mic className="h-6 w-6" />,
         title: "Voice-Activated Learning",
-        description: "Interact with the app using voice commands for a hands-free study experience."
+        description: "Interact with the app using voice commands for a hands-free study experience.",
+        chip: "secondary",
     },
     {
         icon: <Zap className="h-6 w-6" />,
         title: "Instant Flashcards",
-        description: "Turn your notes and readings into study flashcards with a single click."
+        description: "Turn your notes and readings into study flashcards with a single click.",
+        chip: "primary",
     }
 ];
 
 const Features = () => {
     return (
-        <section id="features" className="py-24 bg-white">
+        <section id="features" className="py-24 scroll-mt-24">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center max-w-3xl mx-auto mb-16">
                     <h2 className="text-base font-semibold text-primary tracking-wide uppercase">Features</h2>
@@ -50,26 +56,16 @@ const Features = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {features.map((feature, index) => (
-                        <TiltCard
-                            key={index}
-                            className="group relative p-8 bg-background rounded-3xl border border-gray-100 hover:border-primary/20 transition-all duration-300 hover:shadow-xl hover:shadow-primary/5"
-                        >
-                            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-secondary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-t-3xl" />
-
-                            <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-md mb-6 group-hover:scale-110 transition-transform duration-300">
-                                <div className="text-primary group-hover:text-secondary transition-colors">
-                                    {feature.icon}
-                                </div>
-                            </div>
-
-                            <h3 className="text-xl font-bold text-text mb-3 group-hover:text-primary transition-colors">
-                                {feature.title}
-                            </h3>
-
-                            <p className="text-textSecondary leading-relaxed">
-                                {feature.description}
-                            </p>
-                        </TiltCard>
+                        <ClayCard key={index} className="group p-8">
+                            <ClayChip
+                                variant={feature.chip}
+                                className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-3"
+                            >
+                                <div>{feature.icon}</div>
+                            </ClayChip>
+                            <h3 className="text-xl font-bold text-text mb-3">{feature.title}</h3>
+                            <p className="text-textSecondary leading-relaxed">{feature.description}</p>
+                        </ClayCard>
                     ))}
                 </div>
             </div>

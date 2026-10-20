@@ -5,7 +5,7 @@ import HowItWorks from './components/HowItWorks';
 import Navbar from './components/Navbar';
 import Testimonials from './components/Testimonials';
 import Waitlist from './components/Waitlist';
-import { TiltCard } from './components/ThreeDElements';
+import { ClayButton, ClayCard } from './components/ClayElements';
 
 function App() {
   return (
@@ -18,17 +18,18 @@ function App() {
         <Testimonials />
         <Waitlist />
         {/* Final CTA */}
-        <section className="py-20 bg-primary/5">
+        <section className="py-20">
           <div className="max-w-4xl mx-auto px-4 text-center">
-            <h2 className="text-3xl font-bold mb-6">Ready to transform your learning?</h2>
-            <TiltCard className="inline-block">
-              <button
+            <ClayCard className="py-16 px-6">
+              <h2 className="text-3xl font-extrabold mb-6">Ready to transform your learning?</h2>
+              <ClayButton
+                variant="primary"
                 onClick={() => document.getElementById('waitlist')?.scrollIntoView({ behavior: 'smooth' })}
-                className="bg-primary text-white px-8 py-4 rounded-xl font-bold text-lg shadow-lg shadow-primary/30 hover:shadow-primary/50 transition-all"
+                className="px-8 py-4 rounded-2xl font-bold text-lg"
               >
                 Join Brainlyx Today
-              </button>
-            </TiltCard>
+              </ClayButton>
+            </ClayCard>
           </div>
         </section>
       </main>
