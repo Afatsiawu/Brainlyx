@@ -93,17 +93,24 @@ export const Clay = {
 
 export const Shadows = {
   small: {
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 4,
-    elevation: 2,
+    shadowColor: '#4C4ED1',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.18,
+    shadowRadius: 16,
+    elevation: 6,
   },
   medium: {
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 4,
+    shadowColor: '#4C4ED1',
+    shadowOffset: { width: 0, height: 14 },
+    shadowOpacity: 0.22,
+    shadowRadius: 24,
+    elevation: 10,
+  },
+  large: {
+    shadowColor: '#4C4ED1',
+    shadowOffset: { width: 0, height: 20 },
+    shadowOpacity: 0.26,
+    shadowRadius: 32,
+    elevation: 14,
   },
 };

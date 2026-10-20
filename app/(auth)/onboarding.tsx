@@ -1,4 +1,4 @@
-import { AutoRotating3D, flipIn3D } from '@/components/ui/ThreeD';
+import { flipIn3D } from '@/components/ui/ThreeD';
 import { Colors, ClayShadows, Spacing, Typography } from '@/constants/theme';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -260,16 +260,15 @@ export default function Onboarding() {
 
             {/* App Logo/Title */}
             <Animated.View entering={FadeIn.delay(200)} style={styles.logoContainer}>
-                <AutoRotating3D size={44} duration={7000} tilt={12}>
+                <View style={styles.logoCircle}>
                     <LinearGradient
                         colors={[Colors.primary, Colors.secondary]}
                         start={{ x: 0, y: 0 }}
                         end={{ x: 1, y: 1 }}
-                        style={styles.logoCircle}
-                    >
-                        <Ionicons name="school" size={22} color="white" />
-                    </LinearGradient>
-                </AutoRotating3D>
+                        style={StyleSheet.absoluteFill}
+                    />
+                    <Ionicons name="school" size={22} color="white" />
+                </View>
                 <Text style={styles.logoText}>Brainlyx</Text>
             </Animated.View>
 
@@ -355,14 +354,15 @@ const styles = StyleSheet.create({
         zIndex: 10,
     },
     logoCircle: {
-        width: 44,
-        height: 44,
-        borderRadius: 22,
+        width: 48,
+        height: 48,
+        borderRadius: 24,
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 1,
-        borderColor: 'rgba(255,255,255,0.35)',
-        ...ClayShadows.small,
+        borderColor: 'rgba(255,255,255,0.45)',
+        overflow: 'hidden',
+        ...ClayShadows.medium,
     },
     logoText: {
         ...Typography.h2,
