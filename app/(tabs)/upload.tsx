@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import * as DocumentPicker from 'expo-document-picker';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Animated, { FadeIn, FadeInUp, SlideInDown } from '@/components/ui/Motion';
 
 export default function UploadScreen() {
@@ -28,15 +28,46 @@ export default function UploadScreen() {
             setUploading(true);
 
             const formData = new FormData();
-            formData.append('file', {
-                uri: file.uri,
-                name: file.name,
-                type: file.mimeType || 'application/pdf',
-            } as any);
 
-            const response = await api.post('/documents/upload', formData, {
-                headers: { 'Content-Type': 'multipart/form-data' },
-            });
+            if (Platform.OS === 'web') {
+                // On web, expo-document-picker provides a real File object
+                const webFile = (file as any).file;
+                if (webFile) {
+                    formData.append('file', webFile, file.name);
+                } else {
+                    // Fallback: fetch the blob URI and append as a File
+                    const response = await fetch(file.uri);
+                    const blob = await response.blob();
+                    formData.append('file', new File([blob], file.name, { type: file.mimeType || 'application/pdf' }));
+                }
+            } else {
+                // React Native native convention
+                formData.append('file', {
+                    uri: file.uri,
+                    name: file.name,
+                    type: file.mimeType || 'application/pdf',
+                } as any);
+            }
+
+            let response: any;
+            if (Platform.OS === 'web') {
+                // Use fetch directly on web to avoid axios Content-Type/boundary issues
+                const token = api.defaults.headers.common['Authorization'];
+                const headers: Record<string, string> = {};
+                if (token) headers['Authorization'] = token as string;
+                const res = await fetch(`${api.defaults.baseURL}/documents/upload`, {
+                    method: 'POST',
+                    headers,
+                    body: formData,
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.error || 'Upload failed');
+                response = { data };
+            } else {
+                response = await api.post('/documents/upload', formData, {
+                    headers: { 'Content-Type': 'multipart/form-data' },
+                });
+            }
 
             setUploading(false);
 
