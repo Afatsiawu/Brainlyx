@@ -15,7 +15,7 @@ interface Challenge {
     suggestion: string;
 }
 
-export default function DevilsAdvocateScreen() {
+export default function StressTesterScreen() {
     const router = useRouter();
     const params = useLocalSearchParams();
     const documentId = params.documentId as string | undefined;
@@ -28,7 +28,7 @@ export default function DevilsAdvocateScreen() {
         if (!documentId) return;
         setLoading(true);
         try {
-            const response = await api.post(`/study/devils-advocate/${documentId}`, {});
+            const response = await api.post(`/study/stress-tester/${documentId}`, {});
             setChallenges(response.data.challenges || []);
         } catch (error: any) {
             Alert.alert('Error', error.response?.data?.error || 'Failed to generate challenges.');
@@ -44,7 +44,7 @@ export default function DevilsAdvocateScreen() {
         }
         setLoading(true);
         try {
-            const response = await api.post('/study/devils-advocate-by-topic', { topic: topic.trim() });
+            const response = await api.post('/study/stress-tester-by-topic', { topic: topic.trim() });
             setChallenges(response.data.challenges || []);
         } catch (error: any) {
             Alert.alert('Error', error.response?.data?.error || 'Failed to generate challenges.');
@@ -72,7 +72,7 @@ export default function DevilsAdvocateScreen() {
                     <Ionicons name="arrow-back" size={24} color={Colors.text} />
                 </TouchableOpacity>
                 <View style={styles.headerTitleContainer}>
-                    <Text style={styles.title}>Devil&apos;s Advocate</Text>
+                    <Text style={styles.title}>Stress Tester</Text>
                     <Text style={styles.subtitle}>Stress-test your sources</Text>
                 </View>
                 <View style={{ width: 40 }} />
@@ -106,7 +106,7 @@ export default function DevilsAdvocateScreen() {
                     )}
                     {documentId && !loading && challenges.length === 0 && (
                         <Button
-                            title="Run Devil's Advocate"
+                            title="Run Stress Tester"
                             onPress={generateFromDocument}
                             loading={loading}
                             style={styles.generateBtn}

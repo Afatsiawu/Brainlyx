@@ -150,36 +150,36 @@ router.post('/generate-podcast-by-topic', async (req, res) => {
     }
 });
 
-// Devil's Advocate / Stress-Tester: challenge a document's claims
-router.post('/devils-advocate/:documentId', async (req, res) => {
+// Stress Tester / Stress-Tester: challenge a document's claims
+router.post('/stress-tester/:documentId', async (req, res) => {
     const { documentId } = req.params;
     try {
         const documentRepository = AppDataSource.getRepository(Document);
         const doc = await documentRepository.findOneBy({ id: documentId });
         if (!doc) return res.status(404).json({ error: 'Document not found' });
         if (doc.type === 'audio') {
-            return res.status(400).json({ error: 'Devil\'s Advocate for audio recordings is coming soon.' });
+            return res.status(400).json({ error: 'Stress Tester for audio recordings is coming soon. For now, upload a PDF or text document.' });
         }
         const text = await extractText(doc.path);
-        const { generateDevilsAdvocate } = require('../services/aiService');
-        const result = await generateDevilsAdvocate(text);
+        const { generateStressTester } = require('../services/aiService');
+        const result = await generateStressTester(text);
         res.json({ ...result, id: doc.id });
     } catch (error) {
-        console.error('Devil\'s advocate route failed:', error);
+        console.error('Stress Tester route failed:', error);
         res.status(500).json({ error: error.message || 'Failed to generate challenges' });
     }
 });
 
-// Devil's Advocate by topic
-router.post('/devils-advocate-by-topic', async (req, res) => {
+// Stress Tester by topic
+router.post('/stress-tester-by-topic', async (req, res) => {
     const { topic } = req.body;
     if (!topic) return res.status(400).json({ error: 'Topic is required' });
     try {
-        const { generateDevilsAdvocate } = require('../services/aiService');
-        const result = await generateDevilsAdvocate(topic);
+        const { generateStressTester } = require('../services/aiService');
+        const result = await generateStressTester(topic);
         res.json(result);
     } catch (error) {
-        console.error('Devil\'s advocate by topic failed:', error);
+        console.error('Stress Tester by topic failed:', error);
         res.status(500).json({ error: error.message || 'Failed to generate challenges' });
     }
 });

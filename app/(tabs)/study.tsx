@@ -137,11 +137,11 @@ export default function StudyScreen() {
                 />
 
                 <StudyMode
-                    title="Devil's Advocate"
+                    title="Stress Tester"
                     subtitle="Find holes and challenge your sources"
                     icon="shield-outline"
                     color={Colors.error}
-                    route="/devils-advocate"
+                    route="/stress-tester"
                     delay={400}
                 />
 
