@@ -334,6 +334,9 @@ const generatePodcastScript = async (text) => {
     } catch (error) {
         console.error('Podcast generation failed:', error);
         throw new Error('Failed to generate podcast script. Please try again later.');
+    }
+};
+
 // Stress-Tester: challenge the document's claims against
 // external consensus and surface weaknesses, outdated stats, bias, etc.
 const generateStressTester = async (text) => {
