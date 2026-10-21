@@ -4,7 +4,7 @@ import { Colors, Shadows, Spacing, Typography } from '@/constants/theme';
 import api from '@/services/api';
 import { Ionicons } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
-import { useKeepAwake } from 'expo-keep-awake';
+import { activateKeepAwakeAsync, deactivateKeepAwake } from 'expo-keep-awake';
 import { useRouter } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Alert, Modal, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -26,7 +26,13 @@ export default function RecordLectureScreen() {
     const [recording, setRecording] = useState<Audio.Recording | null>(null);
     const [isRecording, setIsRecording] = useState(false);
 
-    useKeepAwake(); // Keep the screen awake while this screen is active (or conditionally when isRecording is true)
+    useEffect(() => {
+        if (Platform.OS === 'web') return;
+        activateKeepAwakeAsync().catch(() => {});
+        return () => {
+            deactivateKeepAwake();
+        };
+    }, []);
 
     const [duration, setDuration] = useState(0);
     const [transcribing, setTranscribing] = useState(false);
