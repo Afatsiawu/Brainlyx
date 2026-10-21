@@ -8,10 +8,46 @@ import { useFonts } from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
-import { Platform } from 'react-native';
+import { ActivityIndicator, Image, Platform, StyleSheet, Text, View } from 'react-native';
+import Animated, { FadeIn } from '@/components/ui/Motion';
+import { Colors, Typography } from '@/constants/theme';
 import { LayoutAnimationConfig } from 'react-native-reanimated';
 
 SplashScreen.preventAutoHideAsync();
+
+const splashStyles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: Colors.background,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    logoWrap: {
+        alignItems: 'center',
+        gap: 12,
+    },
+    logo: {
+        width: 120,
+        height: 120,
+        borderRadius: 48,
+        borderWidth: 2,
+        borderColor: 'rgba(255,255,255,0.6)',
+    },
+    title: {
+        ...Typography.h1,
+        fontSize: 34,
+        color: Colors.text,
+        marginTop: 16,
+    },
+    subtitle: {
+        ...Typography.body,
+        color: Colors.textSecondary,
+        textAlign: 'center',
+    },
+    spinner: {
+        marginTop: 32,
+    },
+});
 
 export const unstable_settings = {
     anchor: '(tabs)',
@@ -46,7 +82,16 @@ export default function RootLayout() {
     }, [fontsLoaded]);
 
     if (!fontsLoaded) {
-        return null;
+        return (
+            <View style={splashStyles.container}>
+                <Animated.View entering={FadeIn.duration(600)} style={splashStyles.logoWrap}>
+                    <Image source={require('@/assets/images/icon.png')} style={splashStyles.logo} resizeMode="contain" />
+                    <Text style={splashStyles.title}>Brainlyx</Text>
+                    <Text style={splashStyles.subtitle}>Loading your study space…</Text>
+                </Animated.View>
+                <ActivityIndicator size="large" color={Colors.primary} style={splashStyles.spinner} />
+            </View>
+        );
     }
 
     return (

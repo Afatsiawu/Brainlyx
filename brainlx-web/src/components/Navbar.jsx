@@ -1,4 +1,4 @@
-import { Brain, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { ClayButton, ClayChip } from './ClayElements';
 
@@ -19,9 +19,11 @@ const Navbar = () => {
             <div className="clay rounded-[1.75rem] px-4 sm:px-5 py-2 flex justify-between h-16 items-center">
                 <div className="flex-shrink-0 flex items-center gap-2">
                     <a href="#top" onClick={(e) => { e.preventDefault(); scrollToId('top'); }} className="flex items-center gap-2">
-                        <ClayChip variant="primary" className="rounded-xl p-1.5">
-                            <Brain className="h-5 w-5 text-primary" />
-                        </ClayChip>
+                        <img
+                            src="/logo.png"
+                            alt="Brainlyx"
+                            className="w-9 h-9 rounded-xl object-cover shadow-md"
+                        />
                         <span className="font-bold text-xl text-text">Brainlyx</span>
                     </a>
                 </div>

@@ -1,4 +1,4 @@
-import { Brain, Github } from 'lucide-react';
+import { Github } from 'lucide-react';
 import { ClayChip } from './ClayElements';
 
 const Footer = () => {
@@ -8,9 +8,11 @@ const Footer = () => {
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
                     <div className="col-span-1 md:col-span-1">
                         <div className="flex items-center gap-2 mb-4">
-                            <ClayChip variant="primary" className="rounded-xl p-1.5">
-                                <Brain className="h-5 w-5 text-primary" />
-                            </ClayChip>
+                            <img
+                                src="/logo.png"
+                                alt="Brainlyx"
+                                className="w-9 h-9 rounded-xl object-cover shadow-md"
+                            />
                             <span className="font-bold text-xl text-text">Brainlyx</span>
                         </div>
                         <p className="text-textSecondary text-sm leading-relaxed">
