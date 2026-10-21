@@ -17,7 +17,6 @@ class YouTubeService {
                     q: query,
                     part: 'snippet',
                     type: 'video',
-                    eventType: 'live', // Get live streams for continuous music
                     maxResults: 15,
                     key: this.apiKey
                 }
