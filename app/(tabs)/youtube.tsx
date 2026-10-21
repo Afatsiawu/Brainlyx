@@ -1,14 +1,13 @@
 import { Input } from '@/components/ui/Input';
 import { Colors, Shadows, Spacing, Typography } from '@/constants/theme';
+import { useMusic } from '@/context/MusicContext';
 import api from '@/services/api';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useState } from 'react';
 import {
     ActivityIndicator,
-    Alert,
     Image,
-    Linking,
     RefreshControl,
     ScrollView,
     StyleSheet,
@@ -32,6 +31,7 @@ export default function MusicScreen() {
     const [loading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
+    const { playPlaylist } = useMusic();
 
     const fetchPlaylists = async (query?: string) => {
         try {
@@ -71,16 +71,9 @@ export default function MusicScreen() {
         setRefreshing(false);
     };
 
-    const handleOpenPlayer = (playlist: Playlist) => {
-        // YouTube embeds are blocked by YouTube's referrer/origin policy in
-        // WebViews (Error 153), so open the video in the system browser / YouTube
-        // app, which is guaranteed to play.
-        const url = `https://www.youtube.com/watch?v=${playlist.id}`;
-        Linking.openURL(url).catch((err) => {
-            console.error('Failed to open YouTube video:', err);
-            Alert.alert('Error', 'Could not open the video. Please try again.');
-        });
-    };
+const handleOpenPlayer = (playlist: Playlist) => {
+    playPlaylist({ id: playlist.id, name: playlist.name });
+};
 
     if (loading && playlists.length === 0) {
         return (

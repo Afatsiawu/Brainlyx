@@ -334,6 +334,61 @@ const generatePodcastScript = async (text) => {
     } catch (error) {
         console.error('Podcast generation failed:', error);
         throw new Error('Failed to generate podcast script. Please try again later.');
+// Stress-Tester / Devil's Advocate: challenge the document's claims against
+// external consensus and surface weaknesses, outdated stats, bias, etc.
+const generateDevilsAdvocate = async (text) => {
+    if (!process.env.GROQ_API_KEY) {
+        throw new Error('Groq API key not configured');
+    }
+
+    const systemPrompt = `You are a rigorous fact-checker and devil's advocate. Given study material, aggressively find holes: outdated statistics, biased funding sources, scientifically debunked premises, internal contradictions, missing evidence, and overgeneralizations. Be constructive but skeptical.`;
+
+    const userPrompt = `Analyze this material and return JSON: { "challenges": [{ "claim": "the claim made", "challenge": "why it may be wrong/weak", "severity": "high"|"medium"|"low", "suggestion": "what to verify or do next" }] }. Include 5-8 challenges. Material: ${text.substring(0, 8000)}`;
+
+    try {
+        const completion = await getGroqClient().chat.completions.create({
+            messages: [
+                { role: 'system', content: systemPrompt },
+                { role: 'user', content: userPrompt }
+            ],
+            model: DEFAULT_MODEL,
+            response_format: { type: "json_object" },
+        });
+
+        return JSON.parse(completion.choices[0].message.content);
+    } catch (error) {
+        console.error('Devil\'s advocate generation failed:', error);
+        throw new Error('Failed to generate challenges. Please try again later.');
+    }
+};
+
+// Cross-Project Knowledge Mesh: find connections and contradictions across
+// multiple documents (notebooks) in the user's library.
+const generateKnowledgeMesh = async (documents) => {
+    if (!process.env.GROQ_API_KEY) {
+        throw new Error('Groq API key not configured');
+    }
+
+    const corpus = documents.map((d, i) => `--- Document ${i + 1}: ${d.filename} ---\n${(d.text || '').substring(0, 3000)}`).join('\n\n');
+
+    const systemPrompt = `You are a research synthesizer. Given multiple study documents, find cross-document connections, contradictions, complementary insights, and gaps. Be specific about which documents relate.`;
+
+    const userPrompt = `Analyze these documents and return JSON: { "insights": [{ "type": "connection"|"contradiction"|"complement"|"gap", "title": "short title", "description": "explanation", "documents": ["doc titles involved"] }] }. Include 6-10 insights. Documents: ${corpus}`;
+
+    try {
+        const completion = await getGroqClient().chat.completions.create({
+            messages: [
+                { role: 'system', content: systemPrompt },
+                { role: 'user', content: userPrompt }
+            ],
+            model: DEFAULT_MODEL,
+            response_format: { type: "json_object" },
+        });
+
+        return JSON.parse(completion.choices[0].message.content);
+    } catch (error) {
+        console.error('Knowledge mesh generation failed:', error);
+        throw new Error('Failed to generate knowledge mesh. Please try again later.');
     }
 };
 
@@ -346,5 +401,7 @@ module.exports = {
     generateComprehensiveInsights,
     generateLectureInsights,
     generatePodcastScript,
+    generateDevilsAdvocate,
+    generateKnowledgeMesh,
     getGroqClient
 };

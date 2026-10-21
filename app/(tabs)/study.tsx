@@ -135,6 +135,42 @@ export default function StudyScreen() {
                     route="/podcast"
                     delay={300}
                 />
+
+                <StudyMode
+                    title="Devil's Advocate"
+                    subtitle="Find holes and challenge your sources"
+                    icon="shield-outline"
+                    color={Colors.error}
+                    route="/devils-advocate"
+                    delay={400}
+                />
+
+                <StudyMode
+                    title="Knowledge Mesh"
+                    subtitle="Find connections across all your documents"
+                    icon="git-network-outline"
+                    color={Colors.accent}
+                    route="/knowledge-mesh"
+                    delay={500}
+                />
+
+                <StudyMode
+                    title="Jammed Audio Room"
+                    subtitle="Live audio workspace with AI hosts"
+                    icon="radio-outline"
+                    color={Colors.secondary}
+                    route="/audio-room"
+                    delay={600}
+                />
+
+                <StudyMode
+                    title="Spatial Library"
+                    subtitle="3D map of your knowledge"
+                    icon="cube-outline"
+                    color={Colors.primary}
+                    route="/spatial-library"
+                    delay={700}
+                />
             </View>
 
             <View style={styles.section}>

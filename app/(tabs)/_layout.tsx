@@ -3,10 +3,10 @@ import { ClayShadows, Colors } from '@/constants/theme';
 import { Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
 import React from 'react';
-import { ActivityIndicator, Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Animated, { SlideInUp } from '@/components/ui/Motion';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { WebView } from 'react-native-webview';
+import YoutubeIframe from 'react-native-youtube-iframe';
 
 const { height } = Dimensions.get('window');
 
@@ -155,44 +155,17 @@ export default function TabLayout() {
             </View>
 
             <View style={[styles.webviewWrapper, isMinimized && { height: 0, opacity: 0 }]}>
-              <WebView
-                source={{
-                  html: `
-                    <!DOCTYPE html>
-                    <html>
-                      <head>
-                        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-                        <style>
-                          body { margin: 0; padding: 0; background-color: black; overflow: hidden; display: flex; justify-content: center; align-items: center; height: 100vh; }
-                          iframe { width: 100%; height: 100%; border: none; }
-                        </style>
-                      </head>
-                      <body>
-                        <iframe 
-                          src="https://www.youtube.com/embed/${playingPlaylist.id}?autoplay=1&controls=1&modestbranding=1&rel=0&playsinline=1"
-                          frameborder="0"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                          referrerpolicy="strict-origin-when-cross-origin" 
-                          allowfullscreen
-                        ></iframe>
-                      </body>
-                    </html>
-                  `,
-                  baseUrl: "https://www.youtube.com"
+              <YoutubeIframe
+                videoId={playingPlaylist.id}
+                height={isMinimized ? 0 : 220}
+                width={isMinimized ? 0 : 400}
+                play={true}
+                webViewProps={{
+                    allowsInlineMediaPlayback: true,
+                    allowsFullscreenVideo: true,
+                    javaScriptEnabled: true,
+                    domStorageEnabled: true,
                 }}
-                style={styles.webview}
-                allowsInlineMediaPlayback={true}
-                allowsFullscreenVideo={true}
-                mediaPlaybackRequiresUserAction={false}
-                startInLoadingState={true}
-                javaScriptEnabled={true}
-                domStorageEnabled={true}
-                originWhitelist={['*']}
-                renderLoading={() => (
-                  <View style={styles.webviewLoading}>
-                    <ActivityIndicator size="large" color={COLORS.active} />
-                  </View>
-                )}
               />
             </View>
 
