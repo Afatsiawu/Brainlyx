@@ -1,6 +1,6 @@
 import { Colors, Spacing, Typography } from '@/constants/theme';
 import { ClayCard } from '@/components/ui/Clay';
-import { AutoRotating3D, Tilt3DCard } from '@/components/ui/ThreeD';
+import { Tilt3DCard } from '@/components/ui/ThreeD';
 import api from '@/services/api';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
@@ -67,12 +67,20 @@ export default function SpatialLibraryScreen() {
                 </View>
             ) : (
                 <View style={styles.space}>
-                    <AutoRotating3D size={80} duration={20000} tilt={8} style={styles.orb}>
-                        <View style={styles.orbInner}>
+                    {/* Static knowledge core (no rotating circle) */}
+                    <View style={styles.coreContainer}>
+                        <View style={styles.coreOrb}>
                             <Ionicons name="library" size={28} color="white" />
                         </View>
-                    </AutoRotating3D>
-                    <Text style={styles.orbLabel}>Knowledge Core</Text>
+                        <Text style={styles.orbLabel}>Knowledge Core</Text>
+                    </View>
+
+                    {/* Visual anchor strings connecting floating documents */}
+                    <View style={styles.anchorStrings}>
+                        <View style={styles.anchorString} />
+                        <View style={styles.anchorString} />
+                        <View style={styles.anchorString} />
+                    </View>
 
                     <View style={styles.docGrid}>
                         {documents.map((doc, i) => (
@@ -172,29 +180,44 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: Spacing.xl,
     },
-    orb: {
-        marginBottom: Spacing.sm,
+    coreContainer: {
+        alignItems: 'center',
+        marginBottom: Spacing.lg,
     },
-    orbInner: {
+    coreOrb: {
         width: 80,
         height: 80,
         borderRadius: 40,
         backgroundColor: Colors.primary,
         justifyContent: 'center',
         alignItems: 'center',
-        borderWidth: 1,
-        borderColor: 'rgba(255,255,255,0.35)',
+        borderWidth: 2,
+        borderColor: 'rgba(255,255,255,0.45)',
         shadowColor: '#4C4ED1',
         shadowOffset: { width: 0, height: 14 },
         shadowOpacity: 0.3,
         shadowRadius: 24,
         elevation: 12,
+        marginBottom: Spacing.sm,
     },
     orbLabel: {
         ...Typography.caption,
         color: Colors.textSecondary,
         marginBottom: Spacing.xl,
         fontWeight: '600',
+    },
+    anchorStrings: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        gap: Spacing.xl,
+        marginBottom: Spacing.lg,
+        opacity: 0.4,
+    },
+    anchorString: {
+        width: 2,
+        height: 40,
+        backgroundColor: Colors.primary,
+        borderRadius: 1,
     },
     docGrid: {
         flexDirection: 'row',

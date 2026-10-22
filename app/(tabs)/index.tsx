@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/Button';
-import { AutoRotating3D, flipIn3D, Tilt3DCard } from '@/components/ui/ThreeD';
+import { flipIn3D, Tilt3DCard } from '@/components/ui/ThreeD';
 import { Shadows, Spacing, Typography } from '@/constants/theme';
 import { useAuth } from '@/context/AuthContext';
 import { useTheme } from '@/context/ThemeContext';
@@ -409,8 +409,8 @@ export default function DashboardScreen() {
             <Ionicons name="school" size={140} color="white" />
           </Animated.View>
 
-          {/* 3D AI core */}
-          <AutoRotating3D size={64} duration={9000} tilt={16} style={dynamicStyles.quoteCore}>
+          {/* Static AI core (clay orb, no rotation) */}
+          <View style={dynamicStyles.quoteCore}>
             <LinearGradient
               colors={[colors.primary, colors.accent]}
               start={{ x: 0, y: 0 }}
@@ -419,7 +419,7 @@ export default function DashboardScreen() {
             >
               <Ionicons name="sparkles" size={26} color="white" />
             </LinearGradient>
-          </AutoRotating3D>
+          </View>
 
           <View style={dynamicStyles.quoteContentWrapper}>
             <View style={dynamicStyles.quoteIconContainer}>
