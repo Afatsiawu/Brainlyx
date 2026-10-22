@@ -1,6 +1,6 @@
 import PageLayout from '../components/PageLayout';
 import { motion } from 'framer-motion';
-import { Zap, Sparkles, Bug, Plus, ArrowRight } from 'lucide-react';
+import { Zap, Bug, Plus, ArrowRight } from 'lucide-react';
 
 const updates = [
     { version: 'v1.2.0', date: 'Oct 16, 2026', type: 'feature', title: 'Claymorphism Design Overhaul', body: 'Complete visual redesign with soft, puffy clay-style cards, buttons, and inputs across web and app. New color palette and typography (Nunito).' },

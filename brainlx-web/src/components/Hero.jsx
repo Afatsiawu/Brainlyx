@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, Brain, Play, Sparkles, X } from 'lucide-react';
+import { ArrowRight, Brain, Play, X } from 'lucide-react';
 import { useState } from 'react';
 import { ClayButton, ClayCard, ClayChip } from './ClayElements';
 import { TiltCard } from './ThreeDElements';
@@ -63,7 +63,6 @@ const Hero = () => {
               >
                 <span className="relative z-10 flex items-center justify-center gap-2">
                   Start Learning Free
-                  <Sparkles className="h-5 w-5" />
                 </span>
                 <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:animate-shimmer" />
               </ClayButton>
