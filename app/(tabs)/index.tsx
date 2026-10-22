@@ -8,7 +8,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFocusEffect, useRouter } from 'expo-router';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Alert, FlatList, KeyboardAvoidingView, Modal, Platform, RefreshControl, StatusBar as RNStatusBar, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, FlatList, Image, KeyboardAvoidingView, Modal, Platform, RefreshControl, StatusBar as RNStatusBar, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Markdown from 'react-native-markdown-display';
 import Animated, {
   FadeInRight,
@@ -417,7 +417,7 @@ export default function DashboardScreen() {
               end={{ x: 1, y: 1 }}
               style={dynamicStyles.quoteCoreInner}
             >
-              <Ionicons name="sparkles" size={26} color="white" />
+              <Ionicons name="flash" size={26} color="white" />
             </LinearGradient>
           </View>
 
@@ -578,7 +578,7 @@ export default function DashboardScreen() {
           <Ionicons name="chatbubbles" size={28} color="white" />
         </LinearGradient>
         <View style={dynamicStyles.fabBadge}>
-          <Ionicons name="sparkles" size={10} color="white" />
+          <Ionicons name="flash" size={10} color="white" />
         </View>
       </TouchableOpacity>
 
@@ -643,7 +643,7 @@ export default function DashboardScreen() {
             </TouchableOpacity>
             <View style={dynamicStyles.chatTitleContainer}>
               <View style={dynamicStyles.chatAiIconBadge}>
-                <Ionicons name="sparkles" size={16} color="white" />
+                <Image source={require('@/assets/images/icon.png')} style={{ width: 16, height: 16 }} resizeMode="contain" />
               </View>
               <Text style={dynamicStyles.chatTitle}>BrainlyxAI</Text>
             </View>
@@ -700,7 +700,7 @@ export default function DashboardScreen() {
                 ]}>
                   {item.role === 'assistant' && (
                     <View style={dynamicStyles.aiAvatar}>
-                      <Ionicons name="sparkles" size={12} color="white" />
+                      <Image source={require('@/assets/images/icon.png')} style={{ width: 12, height: 12 }} resizeMode="contain" />
                     </View>
                   )}
                   <View style={{ flex: 1, alignItems: item.role === 'user' ? 'flex-end' : 'flex-start' }}>
@@ -757,7 +757,7 @@ export default function DashboardScreen() {
                   style={[dynamicStyles.sendBtn, !chatMessage.trim() && { opacity: 0.5 }]}
                   disabled={!chatMessage.trim()}
                 >
-                  <Ionicons name="send" size={20} color="white" />
+                  <Image source={require('@/assets/images/icon.png')} style={{ width: 20, height: 20 }} resizeMode="contain" />
                 </TouchableOpacity>
               </View>
             </KeyboardAvoidingView>

@@ -198,7 +198,7 @@ export default function QuestionsScreen() {
                     </View>
                 ) : questions.length === 0 ? (
                     <View style={styles.emptyContainer}>
-                        <Ionicons name="sparkles-outline" size={64} color={Colors.primary + '40'} />
+                        <Ionicons name="flash-outline" size={64} color={Colors.primary + '40'} />
                         <Text style={styles.emptyText}>Enter a topic above to generate AI-predicted exam questions.</Text>
                     </View>
                 ) : filteredQuestions.length === 0 ? (

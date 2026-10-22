@@ -290,7 +290,7 @@ export default function FlashcardsScreen() {
                                         onPress={generateByTopic}
                                         disabled={!topic.trim()}
                                     >
-                                        <Ionicons name="sparkles" size={20} color="white" style={{ marginRight: 8 }} />
+                                        <Ionicons name="flash" size={20} color="white" style={{ marginRight: 8 }} />
                                         <Text style={styles.generateButtonText}>Generate</Text>
                                     </TouchableOpacity>
                                 </View>

@@ -43,7 +43,7 @@ const slides: OnboardingSlide[] = [
         id: '2',
         title: 'AI-Powered Learning',
         description: 'Smart algorithms analyze your content to predict exam questions and create perfect flashcards.',
-        icon: 'sparkles',
+        icon: 'flash',
         gradient: ['#f093fb', '#f5576c'],
         accentColor: '#f093fb',
     },

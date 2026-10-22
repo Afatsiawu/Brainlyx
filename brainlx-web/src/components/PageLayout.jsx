@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Sparkles, Brain } from 'lucide-react';
+import { ArrowLeft, Brain } from 'lucide-react';
 
 const PageLayout = ({ title, subtitle, accent = 'primary', children }) => {
     const accentGradients = {
@@ -39,7 +39,7 @@ const PageLayout = ({ title, subtitle, accent = 'primary', children }) => {
                         transition={{ duration: 0.6 }}
                     >
                         <div className="inline-flex items-center gap-2 bg-white/60 backdrop-blur-sm border border-white/40 rounded-full px-4 py-1.5 mb-6 shadow-sm">
-                            <Sparkles className="h-4 w-4 text-primary" />
+                            <Brain className="h-4 w-4 text-primary" />
                             <span className="text-sm font-medium text-textSecondary">Brainlyx</span>
                         </div>
                         <h1 className="text-5xl md:text-7xl font-black tracking-tight text-text mb-4 leading-[1.05]">
