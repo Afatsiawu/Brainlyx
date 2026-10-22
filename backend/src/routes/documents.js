@@ -2,16 +2,19 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const path = require('path');
-const AppDataSource = require('../data-source');
+const fs = require('fs');
 const Document = require('../models/Document');
-const { extractText, generateComprehensiveInsights } = require('../services/aiService');
-const { log, error: logError } = require('../utils/logger');
-const { promiseWithTimeout } = require('../utils/promiseHelper');
+const AppDataSource = require('../data-source');
 
 // Configure Multer
+const uploadsDir = path.join(__dirname, '..', 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir, { recursive: true });
+}
+
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'uploads/');
+        cb(null, uploadsDir);
     },
     filename: (req, file, cb) => {
         cb(null, Date.now() + path.extname(file.originalname));

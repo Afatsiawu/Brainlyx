@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Github, Mail, ArrowRight } from 'lucide-react';
+import { Github, Mail, ArrowRight, Brain } from 'lucide-react';
 import { ClayChip } from './ClayElements';
 
 const Footer = () => {
@@ -10,7 +10,9 @@ const Footer = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
                     <div>
                         <div className="flex items-center gap-2 mb-4">
-                            <img src="/logo.png" alt="Brainlyx" className="w-10 h-10 rounded-xl object-cover shadow-md" />
+                            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center shadow-md">
+                                <Brain className="h-5 w-5 text-white" />
+                            </div>
                             <span className="font-bold text-2xl text-text">Brainlyx</span>
                         </div>
                         <p className="text-textSecondary text-sm leading-relaxed max-w-md">

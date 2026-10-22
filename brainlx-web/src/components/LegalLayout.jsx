@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Brain } from 'lucide-react';
 import { ClayCard } from './ClayElements';
 
 const LegalLayout = ({ title, lastUpdated, children }) => {
@@ -8,7 +9,9 @@ const LegalLayout = ({ title, lastUpdated, children }) => {
             <div className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
                     <Link to="/" className="flex items-center gap-2">
-                        <img src="/logo.png" alt="Brainlyx" className="w-8 h-8 rounded-lg object-cover" />
+                        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+                            <Brain className="h-4 w-4 text-white" />
+                        </div>
                         <span className="font-bold text-xl text-text">Brainlyx</span>
                     </Link>
                     <Link to="/" className="text-textSecondary hover:text-primary transition-colors text-sm font-medium">
