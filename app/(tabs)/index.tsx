@@ -103,7 +103,7 @@ const RecentItem = ({ item, index, colors, dynamicStyles, onPress }: any) => (
           {item.filename}
         </Text>
         <Text style={dynamicStyles.recentSubtitle}>
-          {new Date(item.uploadedAt).toLocaleDateString()} • {
+          {new Date(item.uploadedAt).toLocaleDateString()} - {
             item.type === 'audio' ? 'Audio Recording' :
               item.status === 'completed' ? 'Ready to study' :
                 item.status === 'failed' ? 'Analysis failed' :

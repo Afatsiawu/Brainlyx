@@ -87,7 +87,7 @@ export default function RootLayout() {
                 <Animated.View entering={FadeIn.duration(600)} style={splashStyles.logoWrap}>
                     <Image source={require('@/assets/images/icon.png')} style={splashStyles.logo} resizeMode="contain" />
                     <Text style={splashStyles.title}>Brainlyx</Text>
-                    <Text style={splashStyles.subtitle}>Loading your study space…</Text>
+                    <Text style={splashStyles.subtitle}>Loading your study space...</Text>
                 </Animated.View>
                 <ActivityIndicator size="large" color={Colors.primary} style={splashStyles.spinner} />
             </View>

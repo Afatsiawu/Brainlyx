@@ -7,7 +7,7 @@ const faqs = [
     { q: "What file types are supported?", a: "We support PDF, DOCX, and TXT files. Audio recordings (M4A, MP3) are also supported for transcription." },
     { q: "How does the AI generate flashcards?", a: "Our AI analyzes your document, extracts key concepts, and creates question-answer pairs designed for active recall and spaced repetition." },
     { q: "Can I use Brainlyx offline?", a: "Some features work offline, but AI-powered features (summaries, flashcards, questions) require an internet connection." },
-    { q: "How do I delete my account?", a: "Go to Profile → Settings → Delete Account. Your data will be permanently removed within 30 days." },
+    { q: "How do I delete my account?", a: "Go to Profile - Settings - Delete Account. Your data will be permanently removed within 30 days." },
     { q: "Is my data secure?", a: "Yes. We use industry-standard encryption (HTTPS/TLS) and store data on secure cloud infrastructure. We never sell your personal information." },
 ];
 

@@ -233,7 +233,7 @@ export default function StudyScreen() {
                                     <Text style={styles.recentTitle} numberOfLines={1}>{doc.filename}</Text>
                                     <View style={styles.recentMetaRow}>
                                         <Text style={styles.recentMeta}>
-                                            {doc.status === 'completed' ? `Ready • ${new Date(doc.uploadedAt).toLocaleDateString()}` : 'Processing...'}
+                                            {doc.status === 'completed' ? `Ready - ${new Date(doc.uploadedAt).toLocaleDateString()}` : 'Processing...'}
                                         </Text>
                                         {!doc.flashcards && doc.questions && (
                                             <View style={styles.examBadge}>
