@@ -1,31 +1,31 @@
 @import "tailwindcss";
 
 @theme {
-  /* Clay palette (soft pastel claymorphism) */
-  --color-primary: #6C6FF5;
-  --color-primaryLight: #E4E4FC;
-  --color-secondary: #A78BFA;
-  --color-accent: #2DD4BF;
-  --color-background: #ECECF9;
-  --color-surface: #F8F8FD;
-  --color-text: #2B2854;
-  --color-textSecondary: #6E6A95;
-  --color-error: #FB7185;
-  --color-success: #34D399;
-  --color-warning: #FBBF24;
-  --color-border: #DCDCF2;
+  /* Warm sunset clay palette */
+  --color-primary: #FF7A59;
+  --color-primaryLight: #FFE8E2;
+  --color-secondary: #FF6B9D;
+  --color-accent: #FFB74D;
+  --color-background: #FFF8F0;
+  --color-surface: #FFFCF7;
+  --color-text: #2D1B0E;
+  --color-textSecondary: #7A6B5D;
+  --color-error: #FF5A5F;
+  --color-success: #4CAF50;
+  --color-warning: #FF9800;
+  --color-border: #F0E0D6;
 
   /* Fonts */
-  --font-sans: "Inter", sans-serif;
+  --font-sans: 'Nunito', system-ui, -apple-system, sans-serif;
 
-  /* Clay shadows: soft outer drop shadow + puffy inner highlights */
-  --shadow-clay-sm: 0 10px 25px -8px rgb(76 78 209 / 0.25), inset 0 2px 3px rgb(255 255 255 / 0.9), inset 0 -5px 10px rgb(76 78 209 / 0.12);
-  --shadow-clay: 0 20px 40px -12px rgb(76 78 209 / 0.28), inset 0 2px 3px rgb(255 255 255 / 0.95), inset 0 -8px 14px rgb(76 78 209 / 0.14);
-  --shadow-clay-lg: 0 32px 64px -16px rgb(76 78 209 / 0.32), inset 0 3px 5px rgb(255 255 255 / 0.95), inset 0 -10px 18px rgb(76 78 209 / 0.16);
-  --shadow-clay-xl: 0 44px 88px -20px rgb(76 78 209 / 0.35), inset 0 4px 6px rgb(255 255 255 / 1), inset 0 -12px 22px rgb(76 78 209 / 0.18);
-  --shadow-press: 0 6px 14px -6px rgb(76 78 209 / 0.3), inset 0 2px 3px rgb(255 255 255 / 0.8), inset 0 -4px 8px rgb(76 78 209 / 0.15);
+  /* Warm clay shadows: soft outer drop shadow + puffy inner highlights */
+  --shadow-clay-sm: 0 10px 25px -8px rgb(200 100 60 / 0.22), inset 0 2px 3px rgb(255 255 255 / 0.9), inset 0 -5px 10px rgb(200 100 60 / 0.12);
+  --shadow-clay: 0 20px 40px -12px rgb(200 100 60 / 0.25), inset 0 2px 3px rgb(255 255 255 / 0.95), inset 0 -8px 14px rgb(200 100 60 / 0.14);
+  --shadow-clay-lg: 0 32px 64px -16px rgb(200 100 60 / 0.28), inset 0 3px 5px rgb(255 255 255 / 0.95), inset 0 -10px 18px rgb(200 100 60 / 0.16);
+  --shadow-clay-xl: 0 44px 88px -20px rgb(200 100 60 / 0.32), inset 0 4px 6px rgb(255 255 255 / 1), inset 0 -12px 22px rgb(200 100 60 / 0.18);
+  --shadow-press: 0 6px 14px -6px rgb(200 100 60 / 0.28), inset 0 2px 3px rgb(255 255 255 / 0.8), inset 0 -4px 8px rgb(200 100 60 / 0.15);
 
-  /* Remap Tailwind's default shadow utilities to clay depths */
+  /* Remap Tailwind's default shadow utilities to warm clay depths */
   --shadow-md: var(--shadow-clay-sm);
   --shadow-lg: var(--shadow-clay);
   --shadow-xl: var(--shadow-clay-lg);
@@ -85,60 +85,60 @@
 
 /* Clay component primitives (used with Tailwind layout classes) */
 @layer components {
-    .clay {
-        background: linear-gradient(145deg, var(--color-surface) 0%, #EFEFFB 100%);
-        box-shadow: var(--shadow-clay);
-        border: 1px solid rgb(255 255 255 / 0.7);
-    }
-    .clay-interactive {
-        transition: box-shadow 0.3s ease, transform 0.3s ease;
-    }
-    .clay-interactive:hover {
-        box-shadow: var(--shadow-clay-lg);
-        transform: translateY(-4px);
-    }
-    .clay-btn {
-        box-shadow: var(--shadow-clay-sm);
-        border: 1px solid rgb(255 255 255 / 0.55);
-        cursor: pointer;
-        transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
-    }
-    .clay-btn:hover {
-        filter: brightness(1.06);
-    }
-    .clay-btn:active {
-        transform: translateY(2px) scale(0.98);
-        box-shadow: var(--shadow-press);
-    }
-    .clay-btn-primary {
-        background: linear-gradient(145deg, #8487FF 0%, #5B5FE9 100%);
-        color: #ffffff;
-    }
-    .clay-btn-white {
-        background: linear-gradient(145deg, #FFFFFF 0%, #EEEEFA 100%);
-        color: var(--color-text);
-    }
-    .clay-chip {
-        background: linear-gradient(145deg, var(--color-surface) 0%, #EFEFFB 100%);
-        box-shadow: var(--shadow-clay-sm);
-        border: 1px solid rgb(255 255 255 / 0.6);
-        transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
-    }
-    .clay-chip:hover {
-        transform: translateY(-3px);
-        filter: brightness(1.04);
-    }
-    .clay-input {
-        background: linear-gradient(145deg, #E7E7F5 0%, #F1F1FB 100%);
-        box-shadow: inset 0 4px 10px rgb(76 78 209 / 0.12), inset 0 -2px 4px rgb(255 255 255 / 0.7);
-        border: 1px solid rgb(255 255 255 / 0.6);
-        border-radius: 1.25rem;
-    }
-    .clay-input:focus {
-        outline: none;
-        border-color: var(--color-primary);
-        box-shadow: inset 0 4px 10px rgb(76 78 209 / 0.12), inset 0 -2px 4px rgb(255 255 255 / 0.7), 0 0 0 4px rgb(108 111 245 / 0.25);
-    }
+  .clay {
+    background: linear-gradient(145deg, var(--color-surface) 0%, #FFF0E8 100%);
+    box-shadow: var(--shadow-clay);
+    border: 1px solid rgb(255 255 255 / 0.7);
+  }
+  .clay-interactive {
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  .clay-interactive:hover {
+    box-shadow: var(--shadow-clay-lg);
+    transform: translateY(-4px);
+  }
+  .clay-btn {
+    box-shadow: var(--shadow-clay-sm);
+    border: 1px solid rgb(255 255 255 / 0.55);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+  }
+  .clay-btn:hover {
+    filter: brightness(1.06);
+  }
+  .clay-btn:active {
+    transform: translateY(2px) scale(0.98);
+    box-shadow: var(--shadow-press);
+  }
+  .clay-btn-primary {
+    background: linear-gradient(145deg, #FF8A65 0%, #FF5722 100%);
+    color: #ffffff;
+  }
+  .clay-btn-white {
+    background: linear-gradient(145deg, #FFFFFF 0%, #FFF0E8 100%);
+    color: var(--color-text);
+  }
+  .clay-chip {
+    background: linear-gradient(145deg, var(--color-surface) 0%, #FFF0E8 100%);
+    box-shadow: var(--shadow-clay-sm);
+    border: 1px solid rgb(255 255 255 / 0.6);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+  }
+  .clay-chip:hover {
+    transform: translateY(-3px);
+    filter: brightness(1.04);
+  }
+  .clay-input {
+    background: linear-gradient(145deg, #F5E6DA 0%, #FFF0E8 100%);
+    box-shadow: inset 0 4px 10px rgb(200 100 60 / 0.12), inset 0 -2px 4px rgb(255 255 255 / 0.7);
+    border: 1px solid rgb(255 255 255 / 0.6);
+    border-radius: 1.25rem;
+  }
+  .clay-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: inset 0 4px 10px rgb(200 100 60 / 0.12), inset 0 -2px 4px rgb(255 255 255 / 0.7), 0 0 0 4px rgb(255 122 89 / 0.25);
+  }
 }
 
 /* Tailwind v4 defaults to currentColor for borders; restore the v3 default (gray-200) */
@@ -160,8 +160,8 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background-color: #ECECF9;
-  color: #2B2854;
+  background-color: #FFF8F0;
+  color: #2D1B0E;
 }
 
 #root {
