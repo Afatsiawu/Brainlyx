@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Github } from 'lucide-react';
 import { ClayChip } from './ClayElements';
 
@@ -42,9 +43,9 @@ const Footer = () => {
                     <div>
                         <h4 className="font-bold text-text mb-4">Legal</h4>
                         <ul className="space-y-2 text-sm">
-                            {['Privacy Policy', 'Terms of Service', 'Cookie Policy'].map((item) => (
-                                <li key={item} className="text-textSecondary">{item}</li>
-                            ))}
+                            <li><Link to="/privacy" className="text-textSecondary hover:text-primary transition-colors">Privacy Policy</Link></li>
+                            <li><Link to="/terms" className="text-textSecondary hover:text-primary transition-colors">Terms of Service</Link></li>
+                            <li><Link to="/cookies" className="text-textSecondary hover:text-primary transition-colors">Cookie Policy</Link></li>
                         </ul>
                     </div>
                 </div>
