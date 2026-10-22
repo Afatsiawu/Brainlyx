@@ -143,6 +143,13 @@ export default function ProfileScreen() {
                     <SettingItem icon="shield-checkmark-outline" label="Privacy & Security" delay={800} onPress={() => router.push('/profile/security')} />
                 </View>
 
+                <View style={styles.section}>
+                    <Text style={styles.sectionTitle}>Legal</Text>
+                    <SettingItem icon="document-text-outline" label="Privacy Policy" delay={900} onPress={() => router.push('/privacy-policy')} />
+                    <SettingItem icon="document-outline" label="Terms of Service" delay={950} onPress={() => router.push('/terms')} />
+                    <SettingItem icon="shield-outline" label="Cookie Policy" delay={1000} onPress={() => router.push('/cookie-policy')} />
+                </View>
+
                 <Animated.View entering={FadeInUp.delay(900)} style={styles.logoutContainer}>
                     <Button
                         title="Log Out"
