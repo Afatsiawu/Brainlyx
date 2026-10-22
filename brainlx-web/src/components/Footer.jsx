@@ -24,19 +24,20 @@ const Footer = () => {
                     <div>
                         <h4 className="font-bold text-text mb-4">Product</h4>
                         <ul className="space-y-2 text-sm">
-                            <li><a href="#features" className="text-textSecondary hover:text-primary transition-colors">Features</a></li>
-                            <li><a href="#waitlist" className="text-textSecondary hover:text-primary transition-colors">Download</a></li>
-                            <li className="text-textSecondary">Pricing</li>
-                            <li className="text-textSecondary">Updates</li>
+                            <li><Link to="/features" className="text-textSecondary hover:text-primary transition-colors">Features</Link></li>
+                            <li><Link to="/pricing" className="text-textSecondary hover:text-primary transition-colors">Pricing</Link></li>
+                            <li><Link to="/download" className="text-textSecondary hover:text-primary transition-colors">Download</Link></li>
+                            <li><Link to="/updates" className="text-textSecondary hover:text-primary transition-colors">Updates</Link></li>
                         </ul>
                     </div>
 
                     <div>
                         <h4 className="font-bold text-text mb-4">Resources</h4>
                         <ul className="space-y-2 text-sm">
-                            {['Blog', 'Community', 'Help Center', 'API Docs'].map((item) => (
-                                <li key={item} className="text-textSecondary">{item}</li>
-                            ))}
+                            <li><Link to="/blog" className="text-textSecondary hover:text-primary transition-colors">Blog</Link></li>
+                            <li><Link to="/community" className="text-textSecondary hover:text-primary transition-colors">Community</Link></li>
+                            <li><Link to="/help" className="text-textSecondary hover:text-primary transition-colors">Help Center</Link></li>
+                            <li><Link to="/api-docs" className="text-textSecondary hover:text-primary transition-colors">API Docs</Link></li>
                         </ul>
                     </div>
 

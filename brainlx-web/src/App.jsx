@@ -10,6 +10,14 @@ import { Routes, Route } from 'react-router-dom';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
 import CookiePolicy from './pages/CookiePolicy';
+import FeaturesPage from './pages/Features';
+import Pricing from './pages/Pricing';
+import Download from './pages/Download';
+import Updates from './pages/Updates';
+import Blog from './pages/Blog';
+import Community from './pages/Community';
+import HelpCenter from './pages/HelpCenter';
+import APIDocs from './pages/APIDocs';
 
 function App() {
   return (
@@ -45,6 +53,14 @@ function App() {
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/terms" element={<TermsOfService />} />
         <Route path="/cookies" element={<CookiePolicy />} />
+        <Route path="/features" element={<FeaturesPage />} />
+        <Route path="/pricing" element={<Pricing />} />
+        <Route path="/download" element={<Download />} />
+        <Route path="/updates" element={<Updates />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/community" element={<Community />} />
+        <Route path="/help" element={<HelpCenter />} />
+        <Route path="/api-docs" element={<APIDocs />} />
       </Routes>
     </div>
   );
